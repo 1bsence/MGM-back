@@ -1,0 +1,17 @@
+"projects":
+{
+	"project":
+	[
+		{
+		"id": int
+		"name": string
+		"period": string (fixed/ongoing)
+		"start_date":
+		"deadline":
+		"status":
+		"description":
+		"technology": []
+		"employee_roles": [] pereche angajat,rol
+		}
+	]
+}

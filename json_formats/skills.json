@@ -1,0 +1,17 @@
+"skills": 
+{
+	"skill":
+	[
+		{
+		"id": int
+		"name": string
+		"category": string
+		"author": string
+		"departments": lista
+		"valid": pereche bool, string; valid da/nu, string: cine a validat
+		},
+		{
+		///urmatorul si tot asa///
+		}
+	]
+}

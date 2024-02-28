@@ -1,0 +1,11 @@
+"roles_custom":
+{
+	"role_custom":
+	[
+		{
+		"id": int
+		"name": string
+		"project": string
+		}
+	]
+}
