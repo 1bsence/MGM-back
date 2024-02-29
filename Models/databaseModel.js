@@ -2,10 +2,12 @@ const {CosmosClient} = require("@azure/cosmos")
 
 const fs = require("fs")
 
-const Credentials = JSON.parse(fs.readFileSync("database.json"))
-const endpoint = Credentials.endpoint
-const key  = Credentials.key
-const dbid = String(Credentials.dbid)
+// const Credentials = JSON.parse(fs.readFileSync("database.json")) am schimbat pe .env
+//dai in consola npm i dotenv si adaugi in fisierul tau .env variabilele de mediu
+//exemplu: COSMOS_ENDPOINT = "https://endpoint"
+const endpoint = process.env.COSMOS_ENDPOINT
+const key  = process.env.COSMOS_KEY
+const dbid = process.env.COSMOS_DBID
 
 
 const Cosmos_DB = new CosmosClient({endpoint,key}).database(dbid)

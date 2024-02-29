@@ -7,7 +7,7 @@ async function db_CreateEmployee(req,res)
         const data = await getPostData(req)
         if((await Database.writeToDataBase("Employees",data)).id === "201")
         {
-            res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8888');
+            res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
             res.writeHead(201,{"Content-Type": "application/json"})
             res.end("Resource created successsfully")
         }
