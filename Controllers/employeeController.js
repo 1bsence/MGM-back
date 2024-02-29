@@ -47,6 +47,7 @@ async function createEmployee(req,res)
 
         if(await Employee.validSignUp(employee))
         {
+            
             Employee.create(employee)
             res.writeHead(201,{"Content-type":"application/json"})
             return res.end(JSON.stringify(employee))     
