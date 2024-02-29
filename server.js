@@ -1,27 +1,18 @@
 const http = require("http")
 
-const { getEmployees, createEmployee, login } = require("./Controllers/employeeController.js")
+const { createOrganization,seeCON } = require("./Controllers/employeeController.js")
 
-const {db_CreateEmployee} = require("./Controllers/databaseController.js")
 
 
 const server = http.createServer((req, res) => {
-    const headers = {
-        'Access-Control-Allow-Origin': '*', /* @dev First, read about security */
-        'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
-        'Access-Control-Max-Age': 2592000, // 30 days
-    }
-    if(req.url === "/api/employees" && req.method === "GET")
+
+    if(req.url ==="/api/signup" && req.method === "POST")
     {
-        getEmployees(req,res)
+        createOrganization(req,res)
     }
-    else if(req.url ==="/api/signup" && req.method === "POST")
+    else if(req.url ==="/api/seecon" && req.method === "GET")
     {
-        db_CreateEmployee(req,res)
-    }
-    else if(req.url ==="/api/login" && req.method === "GET")
-    {
-        login(req,res)
+        seeCON(req,res)
     }
     else
     {

@@ -1,41 +1,24 @@
-const employees = require("../json_formats/employees.json")
+const Database = require("../Models/databaseModel")
 
-const { WriteToFile, getPostData, login } = require("../utilities.js")
+const {getPostData } = require("../utilities.js")
 
-function findAll()
+//conID -numele organizatiei, foarte sugestiv stiu multumesc!
+//data -obiect cu primul angajat, vezi structura bazei de date 
+async function newOrganization(organization,owner)
 {
-    return new Promise((resolve, reject) => {
-        resolve(employees)
+    return new Promise(async (resolve,reject) =>{
+
+        resolve(await Database.writeToDataBase(organization.organization_name,{Organization_Address: organization.organization_hq, Employees: [ owner]}))
     })
 }
 
-function create(employee)
+async function seeContainer(conID)
 {
-    return new Promise((resolve,reject) => {
-        WriteToFile("./json_formats/employees.json", employee)
-        resolve(employee)
-    })
-}
-async function validEmployee(data)
-{
-    return new Promise((resolve,reject) => {
-        const result = employees.find(e => (e.email === data.email && e.password === data.password))
-        resolve(result)
-    })
-}
-async function validSignUp(data)
-{
-    return new Promise((resolve,reject) => {
-        const result = employees.find(e => (e.email === data.email))
-        
-        resolve(!result)
-    })
+    return Database.readContainerItems(conID)
 }
 
 
 module.exports = {
-    findAll,
-    create,
-    validEmployee,
-    validSignUp
+    newOrganization,
+    seeContainer,
 }
