@@ -1,0 +1,38 @@
+/// createOrganization(data) - start ///
+
+data = corpul requestului, format cerut:
+
+{
+    "organization": {
+                "organization_name": stiring,
+                "organization_address": string
+    },
+    "employee":{
+                "name": string,
+                "email":string,
+                "password": string
+    }
+}
+
+rezultat in baza de date in containerul conID definit in corpul functiei:
+        {
+            name: data.organization.organization_name,
+            url: data.organization.organization_name.replace(/[^A-Z0-9]+/ig, "_"),
+            address: data.organization.organization_address,
+            projects: [],
+            departments: [],
+            custom_roles: [],
+            employees: [ 
+                {
+                    id: randomUUID(), <- generat aleatoriu
+                    name: data.employee.name,
+                    email: data.employee.email,
+                    password: data.employee.password,
+                    role: "",
+                    skills: "",
+                    rights: getRights("rights.json","administrator"), <-rights 
+                    projects: [],
+                    department: ""
+                }
+            ]
+        }

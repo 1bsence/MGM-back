@@ -1,14 +1,15 @@
 const http = require("http")
 
-const { createOrganization,seeCON } = require("./Controllers/employeeController.js")
+const { seeCON } = require("./Controllers/employeeController.js")
 
+const { db_neworg } = require("./Controllers/databaseController.js")
 
 
 const server = http.createServer((req, res) => {
 
     if(req.url ==="/api/signup" && req.method === "POST")
     {
-        createOrganization(req,res)
+        db_neworg(req,res)
     }
     else if(req.url ==="/api/seecon" && req.method === "GET")
     {

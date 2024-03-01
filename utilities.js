@@ -12,6 +12,12 @@ function WriteToFile(filename,content)
     })
 }
 
+function getRights(filename,id)
+{
+    const file_content = JSON.parse(fs.readFileSync(filename))
+    return file_content.find(right => right.id = id) 
+}
+
 async function getPostData(req)
 {
     return new Promise( async (resolve,reject) =>{
@@ -33,5 +39,6 @@ async function getPostData(req)
 
 module.exports = {
     WriteToFile,
-    getPostData
+    getPostData,
+    getRights
 }

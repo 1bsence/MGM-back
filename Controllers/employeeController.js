@@ -4,9 +4,9 @@ const { getPostData} = require("../utilities")
 
 async function createOrganization(req,res){
     const data = await getPostData(req)
-    Employee.newOrganization(data.organization,data.employee)
+    const result = await Employee.newOrganization(data.organization,data.employee)
     res.writeHead(201,{"Content-Type": "application/json"})
-    res.end("Resource created successsfully")
+    res.end(JSON.stringify(result))
 }
 
 async function seeCON(req,res){
