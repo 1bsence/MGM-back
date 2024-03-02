@@ -6,10 +6,17 @@ async function db_neworg(req,res)
     try{
         const data = await getPostData(req)
         const result = await Database.createOrganization(data)
-        res.writeHead(201,{"Content-Type": "application/json"})
-        res.end(JSON.stringify(result))  
-    }
-    catch(error){
+        if(result.id == 201)
+        {
+            res.writeHead(201,{"Content-Type": "application/json"})
+            res.end(JSON.stringify(result)) 
+        }
+        else
+        {
+            res.writeHead(409,{"Content-Type": "application/json"})
+            res.end(JSON.stringify(result)) 
+        }
+    }catch(error){
         console.log(error)
     }
 }
