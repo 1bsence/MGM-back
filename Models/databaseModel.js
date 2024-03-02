@@ -21,9 +21,10 @@ async function createOrganization(data)
 {
 
     await Cosmos_DB.containers.createIfNotExists({id:org_conID}) //ar trebui sa fie deja creat, failsafe
+    let url = data.organization.organization_name ? data.organization.organization_name.replace(/[^a-z0-9]/gi, '_') : ''; //am modificat incat sa nu mai dea eroare daca nu e nu gaseste organizatin_name (in cazde nu e, url va fi gol, trebuie de pus sa dea eroare in cazul asta)
     const resources = {
         name: data.organization.organization_name,
-        url: data.organization.organization_name.replace(/[^A-Z0-9]+/ig, "_"),
+        url: url,
         address: data.organization.organization_address,
         projects: [],
         departments: [],
