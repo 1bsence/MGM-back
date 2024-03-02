@@ -2,5 +2,9 @@
     {
         "id": "administrator",
         "canDoEverything": "true"
+    },
+    {
+        "id": "employee",
+        "canDoEverything": "false"
     }
 ]

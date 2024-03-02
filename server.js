@@ -1,19 +1,27 @@
 const http = require("http")
 
-const { seeCON } = require("./Controllers/employeeController.js")
+const {newOrganization,newEmployee} = require("./Controllers/employeeController.js")
 
-const { db_neworg } = require("./Controllers/databaseController.js")
-
+const {getcondata} = require("./Controllers/databaseController.js")
 
 const server = http.createServer((req, res) => {
 
-    if(req.url ==="/api/signup" && req.method === "POST")
+    if(req.url ==="/signup" && req.method === "POST")
     {
-        db_neworg(req,res)
+        newOrganization(req,res)
     }
-    else if(req.url ==="/api/seecon" && req.method === "GET")
+    else if(req.url.match(/\/signup\/(.*)/) && req.method === "POST")
     {
-        seeCON(req,res)
+        newEmployee(req,res)
+    }
+    else if(req.url ==="/seecon" && req.method === "GET")
+    {
+        getcondata(req,res)
+    }
+    else if(req.url ==="/home" && req.method === "GET")
+    {
+        res.writeHead(200,{"Content-Type":"application/json"})
+        res.end(JSON.stringify({message: "MGM BACK END"}))  
     }
     else
     {
