@@ -1,17 +1,21 @@
-const Database = require("../Models/databaseModel")
+const {getRights} = require("../utilities.js")
+const { randomUUID } = require('crypto')
 
-const {getPostData } = require("../utilities.js")
-
-//conID -numele organizatiei, foarte sugestiv stiu multumesc!
-//data -obiect cu primul angajat, vezi structura bazei de date 
-
-
-async function seeContainer(conID)
+async function createEmployee(employee,role)
 {
-    return Database.readContainerItems(conID)
+    return {
+        id: randomUUID(),
+        name: employee.name,
+        email: employee.email,
+        password: employee.password,
+        role: await getRights("rights.json",role).id,
+        skills: "",
+        rights: await getRights("rights.json",role),
+        projects: [],
+        department: ""
+    }
 }
 
-
 module.exports = {
-    seeContainer,
+    createEmployee,
 }
