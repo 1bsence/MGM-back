@@ -14,7 +14,7 @@ const server = http.createServer((req, res) => {
     {
         newEmployee(req,res)
     }
-    else if(req.url ==="/seecon" && req.method === "GET")
+    else if(req.url ==="/seecon" && req.method === "POST")
     {
         getcondata(req,res)
     }
