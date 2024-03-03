@@ -39,8 +39,22 @@ async function newEmployee(req,res)
         res.end(JSON.stringify(result)) 
     }
 }
-
+async function loginEmployee(req,res)
+{
+    const result = await Database.searchEmployeeCredentials(await getPostData(req))
+    if(result)
+    {
+        res.writeHead(201,{"Content-Type": "application/json"})
+        res.end(JSON.stringify(result)) 
+    }
+    else
+    {
+        res.writeHead(409,{"Content-Type": "application/json"})
+        res.end("409 not found!") 
+    }
+}
 module.exports = {
     newOrganization,
     newEmployee,
+    loginEmployee
 }

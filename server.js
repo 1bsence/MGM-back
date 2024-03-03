@@ -1,6 +1,6 @@
 const http = require("http")
 
-const {newOrganization,newEmployee} = require("./Controllers/employeeController.js")
+const {newOrganization,newEmployee,loginEmployee} = require("./Controllers/employeeController.js")
 
 const {getcondata} = require("./Controllers/databaseController.js")
 
@@ -26,6 +26,10 @@ const server = http.createServer((req, res) => {
     else if(req.url ==="/seecon" && req.method === "POST")
     {
         getcondata(req,res)
+    }
+    else if(req.url ==="/login" && req.method === "POST")
+    {
+        loginEmployee(req,res)
     }
     else if(req.url ==="/home" && req.method === "GET")
     {
