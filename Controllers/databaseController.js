@@ -8,7 +8,8 @@ async function getcondata(req,res)
         const result = await Database.readContainerItems(data.id)
 
             res.writeHead(201,{"Content-Type": "application/json"})
-            res.end(JSON.stringify(result)) 
+            res.end(JSON.stringify(result))
+            
 
     }catch(error){
         console.log(error)
