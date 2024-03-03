@@ -26,7 +26,7 @@ async function createOrganization(data)
             await Employee.createEmployee(data.employee,"administrator")
         ]
     }
-    if(await isValidOrganization(resources))
+    if(await isValidOrganization(resources) && !(await searchEmployeeEmail(data.employee)))
     {
         await Cosmos_DB.container(org_conID).items.create(resources)
         return {id:201,message: `org created`}
@@ -56,11 +56,58 @@ async function isValidOrganization(resource)
 
 async function pushEmployee(org_id,employee)
 {
-    const org = (await readContainerItems(org_conID)).find(org => org.id === org_id)
-    org.employees.push(employee)
-    Cosmos_DB.container(org_conID).item(org.id).replace(org)
-    //console.log(org)
-    return {id: 201}
+    if(!(await searchEmployeeEmail(employee)))
+    {
+        const org = (await readContainerItems(org_conID)).find(org => org.id === org_id)
+        if(org)
+            {org.employees.push(employee)
+            Cosmos_DB.container(org_conID).item(org.id).replace(org)
+            //console.log(org)
+            return {id: 201}
+        }
+        else
+        {
+            return{id:409}
+        }
+    }
+    return{id:409}
+}
+
+//searches all organizations for an employee who has the same email as the parameter employee does
+//if emails match returns complete employee object that matches, otherwise returns false
+//can be upgraded to search for projects/departments
+//needs to be configurable to math email or email&password
+async function searchEmployeeEmail(employee)
+{
+    const orgs = await readContainerItems(org_conID)
+    for(i = 0;i<orgs.length;i++)
+    {
+        org = orgs[i]
+        for(j = 0;j<org.employees.length;j++)
+        {
+            if( org.employees[j].email === employee.email )
+            {
+                return org.employees[j]
+            }
+        }
+    }
+    return false
+}
+async function searchEmployeeCredentials(employee)
+{
+    const orgs = await readContainerItems(org_conID)
+    for(i = 0;i<orgs.length;i++)
+    {
+        org = orgs[i]
+        for(j = 0;j<org.employees.length;j++)
+        {
+            if( org.employees[j].email === employee.email && org.employees[j].password === employee.password )
+            {
+                return org.employees[j]
+            }
+        }
+    }
+    return false
 }
 
 
@@ -68,4 +115,7 @@ module.exports = {
     createOrganization,
     readContainerItems,
     pushEmployee,
+    searchEmployeeCredentials,
+    searchEmployeeEmail,
+
 }

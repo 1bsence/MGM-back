@@ -1,38 +1,31 @@
-/// createOrganization(data) - start ///
-
-data = corpul requestului, format cerut:
+format request sign up:
 
 {
     "organization": {
-                "organization_name": stiring,
-                "organization_address": string
+                "organization_name": "MGMKINGS",
+                "organization_address": "C3"
     },
     "employee":{
-                "name": string,
-                "email":string,
-                "password": string
+                "name": "Ciprian",
+                "email":"gmail",
+                "password": "nu cunosc"
     }
 }
 
-rezultat in baza de date in containerul conID definit in corpul functiei:
-        {
-            name: data.organization.organization_name,
-            url: data.organization.organization_name.replace(/[^A-Z0-9]+/ig, "_"),
-            address: data.organization.organization_address,
-            projects: [],
-            departments: [],
-            custom_roles: [],
-            employees: [ 
-                {
-                    id: randomUUID(), <- generat aleatoriu
-                    name: data.employee.name,
-                    email: data.employee.email,
-                    password: data.employee.password,
-                    role: "",
-                    skills: "",
-                    rights: getRights("rights.json","administrator"), <-rights 
-                    projects: [],
-                    department: ""
-                }
-            ]
-        }
+format request signup angajat:
+
+{   
+    "employee":{    
+    "name": "test2",
+    "email": "gmail2",
+    "password": "nu cunosc 2.0 turbo"
+    }
+}
+
+format request login:
+
+{    
+    "name": "test2",
+    "email": "gmail",
+    "password": "nu cunosc 2.0 turbo triplu turbat"
+}
