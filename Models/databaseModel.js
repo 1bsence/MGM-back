@@ -1,6 +1,7 @@
 const {CosmosClient} = require("@azure/cosmos")
 const Employee = require("./employeeModel.js")
 require('dotenv').config()
+const { randomUUID } = require('crypto')
 
 const endpoint = process.env.COSMOS_ENDPOINT
 const key  = process.env.COSMOS_KEY
@@ -15,8 +16,9 @@ const org_conID = "Organizations"
 async function createOrganization(data)
 {
     await Cosmos_DB.containers.createIfNotExists({id:org_conID}) //ar trebui sa fie deja creat, failsafe
-    let url = data.organization.organization_name ? data.organization.organization_name.replace(/[^a-z0-9]/gi, '_') : ''; //am modificat incat sa nu mai dea eroare daca nu e nu gaseste organizatin_name (in cazde nu e, url va fi gol, trebuie de pus sa dea eroare in cazul asta)
+    
     const resources = {
+        id: randomUUID(),
         name: data.organization.organization_name,
         //url: data.organization.organization_name.replace(/[^A-Z0-9]+/ig, "_"),
         address: data.organization.organization_address,
@@ -27,12 +29,20 @@ async function createOrganization(data)
             await Employee.createEmployee(data.employee,"administrator")
         ]
     }
-    if(await isValidOrganization(resources) && !(await searchEmployeeEmail(data.employee)))
+    if((await searchEmployeeEmail(data.employee)))
     {
-        await Cosmos_DB.container(org_conID).items.create(resources)
-        return {id:201,message: `org created`}
+        return {id:409,message:`email ${data.employee.email} is already used!`} 
     }
-    return {id:409,message: `Organization name already taken!`}
+    else if(!(await isValidOrganization(resources)))
+    {
+        return {id:409,message: `Organization name ${resources.name} already taken!`}
+    }
+    else
+    {
+    await Cosmos_DB.container(org_conID).items.create(resources)
+    return {id:201,organization:resources}
+    }
+
 }
 
 async function readContainerItems(conID)
@@ -47,6 +57,7 @@ async function readContainerItems(conID)
 
 async function isValidOrganization(resource)
 {
+    console.log(org)
     org = (await readContainerItems(org_conID)).find(org => org.name === resource.name)
     if(org)
     {
@@ -64,7 +75,7 @@ async function pushEmployee(org_id,employee)
             {org.employees.push(employee)
             Cosmos_DB.container(org_conID).item(org.id).replace(org)
             //console.log(org)
-            return {id: 201}
+            return {id: 201, employee: employee}
         }
         else
         {
@@ -94,6 +105,8 @@ async function searchEmployeeEmail(employee)
     }
     return false
 }
+
+
 async function searchEmployeeCredentials(employee)
 {
     const orgs = await readContainerItems(org_conID)
@@ -104,7 +117,7 @@ async function searchEmployeeCredentials(employee)
         {
             if( org.employees[j].email === employee.email && org.employees[j].password === employee.password )
             {
-                return org.employees[j]
+                return {organization: {id: org.id,name: org.name}, employee: org.employees[j]}
             }
         }
     }

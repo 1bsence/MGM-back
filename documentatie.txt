@@ -2,13 +2,42 @@ format request sign up:
 
 {
     "organization": {
-                "organization_name": "MGMKINGS",
-                "organization_address": "C3"
+                "organization_name": string,
+                "organization_address": string
     },
     "employee":{
-                "name": "Ciprian",
-                "email":"gmail",
-                "password": "nu cunosc"
+                "name": string,
+                "email": string,
+                "password": string
+    }
+}
+
+exemplu response sign up:
+{
+    "id": 201,
+    "organization": {
+        "id": "5d4587ce-edd4-44a6-b190-019e7b5db113",
+        "name": "mgmtesting4.3",
+        "address": "C3",
+        "projects": [],
+        "departments": [],
+        "custom_roles": [],
+        "employees": [
+            {
+                "id": "0d62b3ec-db6b-41d5-8119-ab7fa66d7fca",
+                "name": "Ciprian2",
+                "email": "aaa@gmail.com",
+                "password": "mypass",
+                "role": "administrator",
+                "skills": "",
+                "rights": {
+                    "id": "administrator",
+                    "canDoEverything": "true"
+                },
+                "projects": [],
+                "department": ""
+            }
+        ]
     }
 }
 
@@ -16,16 +45,123 @@ format request signup angajat:
 
 {   
     "employee":{    
-    "name": "test2",
-    "email": "gmail2",
-    "password": "nu cunosc 2.0 turbo"
+    "name": string,
+    "email": string,
+    "password": string
+    }
+}
+exemplu response signup angajat:
+{
+    "id": 201,
+    "employee": {
+        "id": "fc967bb7-b66e-435e-b27e-6dd5563eecb8",
+        "name": "test2test",
+        "email": "gmail2testt",
+        "password": "testpass",
+        "role": "employee",
+        "skills": "",
+        "rights": {
+            "id": "employee",
+            "canDoEverything": "true"
+        },
+        "projects": [],
+        "department": ""
     }
 }
 
 format request login:
 
-{    
-    "name": "test2",
-    "email": "gmail",
-    "password": "nu cunosc 2.0 turbo triplu turbat"
+{
+    "email": string,
+    "password": string
 }
+
+exemplu response login:
+{
+    "organization": {
+        "id": "5d4587ce-edd4-44a6-b190-019e7b5db113",
+        "name": "mgmtesting4.3"
+    },
+    "employee": {
+        "id": "0d62b3ec-db6b-41d5-8119-ab7fa66d7fca",
+        "name": "Ciprian2",
+        "email": "aaa@gmail.com",
+        "password": "mypass",
+        "role": "administrator",
+        "skills": "",
+        "rights": {
+            "id": "administrator",
+            "canDoEverything": "true"
+        },
+        "projects": [],
+        "department": ""
+    }
+}
+
+format request seecon:
+
+{
+    id: string, nume container "Organizations"....
+}
+
+exemplu response seecon:
+[
+    {
+        "id": "c93c3d32-6d9f-482a-b8c9-72c3af58d911",
+        "name": "mgmtesting3.0",
+        "address": "C3",
+        "projects": [],
+        "departments": [],
+        "custom_roles": [],
+        "employees": [
+            {
+                "id": "8e793be9-f0dc-478a-bfc5-3eed828aae94",
+                "name": "Ciprian2",
+                "email": "ciprian2@gmail.com",
+                "password": "mypass",
+                "role": "administrator",
+                "skills": "",
+                "rights": {
+                    "id": "administrator",
+                    "canDoEverything": "true"
+                },
+                "projects": [],
+                "department": ""
+            }
+        ],
+        "_rid": "sY8jALRdP7sBAAAAAAAAAA==",
+        "_self": "dbs/sY8jAA==/colls/sY8jALRdP7s=/docs/sY8jALRdP7sBAAAAAAAAAA==/",
+        "_etag": "\"2f000987-0000-0d00-0000-65e49f540000\"",
+        "_attachments": "attachments/",
+        "_ts": 1709481812
+    },
+    {
+        "id": "9bb8c1f5-4362-4ff6-88e3-7ba8573de44f",
+        "name": "mgmtesting4.0",
+        "address": "C3",
+        "projects": [],
+        "departments": [],
+        "custom_roles": [],
+        "employees": [
+            {
+                "id": "7889e2de-6a1f-4c28-885b-22a295cf90ae",
+                "name": "Ciprian2",
+                "email": "ciprian22@gmail.com",
+                "password": "mypass",
+                "role": "administrator",
+                "skills": "",
+                "rights": {
+                    "id": "administrator",
+                    "canDoEverything": "true"
+                },
+                "projects": [],
+                "department": ""
+            }
+        ],
+        "_rid": "sY8jALRdP7sCAAAAAAAAAA==",
+        "_self": "dbs/sY8jAA==/colls/sY8jALRdP7s=/docs/sY8jALRdP7sCAAAAAAAAAA==/",
+        "_etag": "\"2f005d8d-0000-0d00-0000-65e49fbf0000\"",
+        "_attachments": "attachments/",
+        "_ts": 1709481919
+    }
+]
