@@ -3,17 +3,17 @@ const http = require("http")
 const {newOrganization,newEmployee,loginEmployee} = require("./Controllers/employeeController.js")
 
 const {getcondata} = require("./Controllers/databaseController.js")
-
+const headers = {
+    'Access-Control-Allow-Origin': '*', /* @dev First, read about security */
+    'Access-Control-Allow-Methods': '*',
+    'Access-Control-Max-Age': 2592000,// 30 days
+    'Access-Control-Allow-Headers':'*',
+    'Access-Control-Allow-Credentials': 'true',
+    "Access-Control-Allow-Headers": "Origin, X-Api-Key, X-Requested-With, Content-Type, Accept, Authorization"
+    /** add other headers as per requirement */
+};
 const server = http.createServer((req, res) => {
-    const headers = {
-        'Access-Control-Allow-Origin': '*', /* @dev First, read about security */
-        'Access-Control-Allow-Methods': '*',
-        'Access-Control-Max-Age': 2592000,// 30 days
-        'Access-Control-Allow-Headers':'*',
-        'Access-Control-Allow-Credentials': 'true',
-        "Access-Control-Allow-Headers": "Origin, X-Api-Key, X-Requested-With, Content-Type, Accept, Authorization"
-        /** add other headers as per requirement */
-      };
+    
 
     if(req.url ==="/signup" && req.method === "POST")
     {
@@ -43,7 +43,7 @@ const server = http.createServer((req, res) => {
     }
 })
 
-
+exports.headers = headers
 const PORT = process.env.PORT || 3030
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
