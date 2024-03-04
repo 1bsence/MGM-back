@@ -1,0 +1,36 @@
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  node.version: '18.x'
+  projectRoot: '.'
+
+steps:
+  - task: NodeTool@0
+    displayName: 'Use Node.js $(node.version)'
+    inputs:
+      versionSpec: '$(node.version)'
+
+  - script: |
+      npm install
+    workingDirectory: $(projectRoot)
+    displayName: "Install dependencies"
+  
+  - task: ArchiveFiles@2
+    displayName: 'Archive files'
+    inputs:
+      rootFolderOrFile: '$(projectRoot)'
+      includeRootFolder: false
+      archiveType: zip
+      archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      replaceExistingArchive: true
+  
+  - task: AzureWebApp@1
+    displayName: 'Deploy Azure Web App'
+    inputs:
+      azureSubscription: 'mgm-service-connection'
+      appType: 'webAppLinux'
+      appName: "atc-2024-mgm-be-linux-web-app"
+      runtimeStack: 'NODE|18.x'
+      package: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      startUpCommand: 'npm start'
