@@ -42,7 +42,6 @@ async function createOrganization(data)
     await Cosmos_DB.container(org_conID).items.create(resources)
     return {id:201,organization:resources}
     }
-
 }
 
 async function readContainerItems(conID)
