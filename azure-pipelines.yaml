@@ -2,7 +2,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  node.version: '14.x'
+  node.version: '18.x'
   projectRoot: '.'
 
 steps:
@@ -31,6 +31,6 @@ steps:
       azureSubscription: 'mgm-service-connection'
       appType: 'webAppLinux'
       appName: "atc-2024-mgm-be-linux-web-app"
-      runtimeStack: 'NODE|14.x'
+      runtimeStack: 'NODE|18.x'
       package: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       startUpCommand: 'npm start'
