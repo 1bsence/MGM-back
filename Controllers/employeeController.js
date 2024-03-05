@@ -37,7 +37,7 @@ async function newEmployee(req,res)
     const org_id = req.url.match(/\/signup\/(.*)/)[1]
     const data =await getPostData(req)
     const employee = await createEmployee(data.employee,"employee")
-    const result = await Database.pushEmployee(org_id,employee)
+    const result = await Database.newOrganizationEmployee(org_id,employee)
     if(result.id === 201)
     {
         res.writeHead(201,headers)
@@ -58,8 +58,8 @@ async function loginEmployee(req,res)
     }
     else
     {
-        res.writeHead(409,headers)
-        res.end(JSON.stringify({id:409,message: "NOT FOUND"}))
+        res.writeHead(404,headers)
+        res.end(JSON.stringify({id:404}))
     }
 }
 module.exports = {

@@ -1,65 +1,92 @@
-format request sign up:
-
+format request see con :
 {
-    "organization": {
-                "organization_name": string,
-                "organization_address": string
-    },
-    "employee":{
-                "name": string,
-                "email": string,
-                "password": string
-    }
-}
+    "id":"78908a37-34d7-40dc-81de-21111254d729"
+} unde id: id-ul containerului ce contine organizatia respectiva
 
-exemplu response sign up:
-{
-    "id": 201,
-    "organization": {
-        "id": "5d4587ce-edd4-44a6-b190-019e7b5db113",
-        "name": "mgmtesting4.3",
+exemplu response see con:
+[
+    {
+        "id": "organization",
+        "name": "MGM TURBO MEISTER KURWA baaa",
         "address": "C3",
+        "_rid": "sY8jAI0TUgUBAAAAAAAAAA==",
+        "_self": "dbs/sY8jAA==/colls/sY8jAI0TUgU=/docs/sY8jAI0TUgUBAAAAAAAAAA==/",
+        "_etag": "\"c3007219-0000-0d00-0000-65e740720000\"",
+        "_attachments": "attachments/",
+        "_ts": 1709654130
+    },
+    {
+        "id": "projects",
         "projects": [],
+        "_rid": "sY8jAI0TUgUCAAAAAAAAAA==",
+        "_self": "dbs/sY8jAA==/colls/sY8jAI0TUgU=/docs/sY8jAI0TUgUCAAAAAAAAAA==/",
+        "_etag": "\"c3007319-0000-0d00-0000-65e740720000\"",
+        "_attachments": "attachments/",
+        "_ts": 1709654130
+    },
+    {
+        "id": "departments",
         "departments": [],
-        "custom_roles": [],
+        "_rid": "sY8jAI0TUgUDAAAAAAAAAA==",
+        "_self": "dbs/sY8jAA==/colls/sY8jAI0TUgU=/docs/sY8jAI0TUgUDAAAAAAAAAA==/",
+        "_etag": "\"c3007419-0000-0d00-0000-65e740720000\"",
+        "_attachments": "attachments/",
+        "_ts": 1709654130
+    },
+    {
+        "id": "employees",
         "employees": [
             {
-                "id": "0d62b3ec-db6b-41d5-8119-ab7fa66d7fca",
-                "name": "Ciprian2",
-                "email": "aaa@gmail.com",
+                "id": "fcbc6749-d5bf-48e0-bd12-81671900da6f",
+                "name": "ionut",
+                "email": "ionut2@gmail.com",
                 "password": "mypass",
-                "role": "administrator",
-                "skills": "",
+                "role": "employee",
+                "skills": [],
                 "rights": {
-                    "id": "administrator",
+                    "id": "employee",
                     "canDoEverything": "true"
                 },
                 "projects": [],
                 "department": ""
             }
-        ]
+        ],
+        "_rid": "sY8jAI0TUgUEAAAAAAAAAA==",
+        "_self": "dbs/sY8jAA==/colls/sY8jAI0TUgU=/docs/sY8jAI0TUgUEAAAAAAAAAA==/",
+        "_etag": "\"c3007519-0000-0d00-0000-65e740720000\"",
+        "_attachments": "attachments/",
+        "_ts": 1709654130
     }
-}
+]
 
-format request signup angajat:
+erori seecon: 404
 
-{   
-    "employee":{    
-    "name": string,
-    "email": string,
-    "password": string
-    }
-}
-exemplu response signup angajat:
+format request signup admin:
 {
-    "id": 201,
+    "organization": {
+                "name": "MGM TURBO MEISTER KURWA baaa",
+                "address": "C3"
+    },
+    "employee":{
+                "name": "ionut",
+                "email":"ionut2@gmail.com",
+                "password": "mypass"
+    }
+}
+
+format raspuns signup admin: 
+{
+    "organization": {
+        "id": "86578af5-2bb8-4507-a113-0bb612062589",
+        "name": "MGM TURBO MEISTER KURWA 3.0"
+    },
     "employee": {
-        "id": "fc967bb7-b66e-435e-b27e-6dd5563eecb8",
-        "name": "test2test",
-        "email": "gmail2testt",
-        "password": "testpass",
+        "id": "346c9ec3-45e5-424d-9a46-07bd9d25eb80",
+        "name": "ionut",
+        "email": "ionutspun2@gmail.com",
+        "password": "mypass",
         "role": "employee",
-        "skills": "",
+        "skills": [],
         "rights": {
             "id": "employee",
             "canDoEverything": "true"
@@ -69,28 +96,33 @@ exemplu response signup angajat:
     }
 }
 
-format request login:
+erori signup admin: 409 conflict nume organizatie, 409 conflict email angajat
 
-{
-    "email": string,
-    "password": string
+format request signup angajat:
+{   
+    "employee":{    
+    "name": "Johanes2222",
+    "email": "tanker2223@gmail.com",
+    "password": "JohanMeister"
+    }
 }
 
-exemplu response login:
+format response signup angajat:
+
 {
     "organization": {
-        "id": "5d4587ce-edd4-44a6-b190-019e7b5db113",
-        "name": "mgmtesting4.3"
+        "id": "78908a37-34d7-40dc-81de-21111254d729",
+        "name": "MGM TURBO MEISTER KURWA baaa"
     },
     "employee": {
-        "id": "0d62b3ec-db6b-41d5-8119-ab7fa66d7fca",
-        "name": "Ciprian2",
-        "email": "aaa@gmail.com",
-        "password": "mypass",
-        "role": "administrator",
-        "skills": "",
+        "id": "f6435ed5-c709-45e9-b3ed-9bde3b9a228c",
+        "name": "Johanes2222",
+        "email": "tanker2223@gmail.com",
+        "password": "JohanMeister",
+        "role": "employee",
+        "skills": [],
         "rights": {
-            "id": "administrator",
+            "id": "employee",
             "canDoEverything": "true"
         },
         "projects": [],
@@ -98,70 +130,35 @@ exemplu response login:
     }
 }
 
-format request seecon:
+erori: 409 conflict email angajat, 404 id organizatie nu exista (din url-ul cererii)
 
+format request login:
 {
-    id: string, nume container "Organizations"....
+    "email": "ionut2@gmail.com",
+    "password": "mypass"
 }
 
-exemplu response seecon:
-[
-    {
-        "id": "c93c3d32-6d9f-482a-b8c9-72c3af58d911",
-        "name": "mgmtesting3.0",
-        "address": "C3",
-        "projects": [],
-        "departments": [],
-        "custom_roles": [],
-        "employees": [
-            {
-                "id": "8e793be9-f0dc-478a-bfc5-3eed828aae94",
-                "name": "Ciprian2",
-                "email": "ciprian2@gmail.com",
-                "password": "mypass",
-                "role": "administrator",
-                "skills": "",
-                "rights": {
-                    "id": "administrator",
-                    "canDoEverything": "true"
-                },
-                "projects": [],
-                "department": ""
-            }
-        ],
-        "_rid": "sY8jALRdP7sBAAAAAAAAAA==",
-        "_self": "dbs/sY8jAA==/colls/sY8jALRdP7s=/docs/sY8jALRdP7sBAAAAAAAAAA==/",
-        "_etag": "\"2f000987-0000-0d00-0000-65e49f540000\"",
-        "_attachments": "attachments/",
-        "_ts": 1709481812
+format response login:
+
+{
+    "organization": {
+        "id": "78908a37-34d7-40dc-81de-21111254d729",
+        "name": "MGM TURBO MEISTER KURWA baaa"
     },
-    {
-        "id": "9bb8c1f5-4362-4ff6-88e3-7ba8573de44f",
-        "name": "mgmtesting4.0",
-        "address": "C3",
+    "employee": {
+        "id": "fcbc6749-d5bf-48e0-bd12-81671900da6f",
+        "name": "ionut",
+        "email": "ionut2@gmail.com",
+        "password": "mypass",
+        "role": "employee",
+        "skills": [],
+        "rights": {
+            "id": "employee",
+            "canDoEverything": "true"
+        },
         "projects": [],
-        "departments": [],
-        "custom_roles": [],
-        "employees": [
-            {
-                "id": "7889e2de-6a1f-4c28-885b-22a295cf90ae",
-                "name": "Ciprian2",
-                "email": "ciprian22@gmail.com",
-                "password": "mypass",
-                "role": "administrator",
-                "skills": "",
-                "rights": {
-                    "id": "administrator",
-                    "canDoEverything": "true"
-                },
-                "projects": [],
-                "department": ""
-            }
-        ],
-        "_rid": "sY8jALRdP7sCAAAAAAAAAA==",
-        "_self": "dbs/sY8jAA==/colls/sY8jALRdP7s=/docs/sY8jALRdP7sCAAAAAAAAAA==/",
-        "_etag": "\"2f005d8d-0000-0d00-0000-65e49fbf0000\"",
-        "_attachments": "attachments/",
-        "_ts": 1709481919
+        "department": ""
     }
-]
+}
+
+erori login: 404

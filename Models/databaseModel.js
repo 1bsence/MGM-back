@@ -1,5 +1,7 @@
 const {CosmosClient} = require("@azure/cosmos")
+
 const Employee = require("./employeeModel.js")
+
 require('dotenv').config()
 const { randomUUID } = require('crypto')
 
@@ -9,39 +11,72 @@ const dbid = process.env.COSMOS_DBID
 
 const Cosmos_DB = new CosmosClient({endpoint,key}).database(dbid)
 
-const org_conID = "Organizations"
-
-//Cosmos_DB.container(org_conID).delete()
+async function listConIDs()
+{
+    const conz =(await Cosmos_DB.containers.readAll().fetchAll()).resources
+    const idlist = []
+    for(i = 0;i<conz.length;i++)
+    {
+        idlist.push(conz[i].id)
+    }
+    return idlist
+}
 
 async function createOrganization(data)
 {
-    await Cosmos_DB.containers.createIfNotExists({id:org_conID}) //ar trebui sa fie deja creat, failsafe
-    
-    const resources = {
-        id: randomUUID(),
-        name: data.organization.organization_name,
-        //url: data.organization.organization_name.replace(/[^A-Z0-9]+/ig, "_"),
-        address: data.organization.organization_address,
-        projects: [],
-        departments: [],
-        custom_roles: [],
-        employees: [ 
-            await Employee.createEmployee(data.employee,"administrator")
-        ]
-    }
-    if((await searchEmployeeEmail(data.employee)))
+    const conid = randomUUID()
+    if(await hasValidName(data.organization.name))
     {
-        return {id:409,message:`email ${data.employee.email} is already used!`} 
+        return {id: 409, message: "Numele organizatiei este deja folosit"}
     }
-    else if(!(await isValidOrganization(resources)))
+    if(await searchEmployee(data.employee))
     {
-        return {id:409,message: `Organization name ${resources.name} already taken!`}
+        return {id: 409, message: "Emailul este deja folosit"}
     }
-    else
+    await Cosmos_DB.containers.createIfNotExists({id:conid}) // trebuie generat un conid dupa nume
+
+    await Cosmos_DB.container(conid).items.create({
+        id: "organization",
+        name: data.organization.name,
+        address: data.organization.address
+    })
+    await Cosmos_DB.container(conid).items.create({
+        id: "projects",
+        projects: []
+    })
+    await Cosmos_DB.container(conid).items.create({
+        id: "departments",
+        departments: []
+    })
+    const employee = await Employee.createEmployee(data.employee,"employee")
+    await Cosmos_DB.container(conid).items.create({
+        id: "employees",
+        employees: [employee]
+    })
+    return {
+        organization: {
+            id: conid,
+            name: data.organization.name
+        },
+        employee
+    }
+}
+
+async function hasValidName(name)
+{
+    const conids = (await listConIDs()).filter(function (val) {
+        return val !== "Organizations"
+    })
+    for(i = 0; i < conids.length;i++)
     {
-    await Cosmos_DB.container(org_conID).items.create(resources)
-    return {id:201,organization:resources}
+        var organization = await (await Cosmos_DB.container(conids[i]).item("organization",undefined).read()).resource
+
+        if(organization.name === name)
+        {
+            return true
+        }
     }
+    return false 
 }
 
 async function readContainerItems(conID)
@@ -54,81 +89,83 @@ async function readContainerItems(conID)
     return (await Cosmos_DB.container(conID).items.readAll().fetchAll()).resources
 }
 
-async function isValidOrganization(resource)
+async function searchEmployee(employee)
 {
-    console.log(org)
-    org = (await readContainerItems(org_conID)).find(org => org.name === resource.name)
-    if(org)
+    const conids = (await listConIDs()).filter(function (val) {
+        return val !== "Organizations"
+    })
+    for(i = 0; i < conids.length;i++)
     {
-        return false
-    }
-    return true
-}
-
-async function pushEmployee(org_id,employee)
-{
-    if(!(await searchEmployeeEmail(employee)))
-    {
-        const org = (await readContainerItems(org_conID)).find(org => org.id === org_id)
-        if(org)
-            {org.employees.push(employee)
-            Cosmos_DB.container(org_conID).item(org.id).replace(org)
-            //console.log(org)
-            return {id: 201, employee: employee}
-        }
-        else
+        var organizationEmployees = await (await Cosmos_DB.container(conids[i]).item("employees",undefined).read()).resource.employees
+        for(j = 0;j < organizationEmployees.length;j++)
         {
-            return{id:409}
-        }
-    }
-    return{id:409}
-}
-
-//searches all organizations for an employee who has the same email as the parameter employee does
-//if emails match returns complete employee object that matches, otherwise returns false
-//can be upgraded to search for projects/departments
-//needs to be configurable to math email or email&password
-async function searchEmployeeEmail(employee)
-{
-    const orgs = await readContainerItems(org_conID)
-    for(i = 0;i<orgs.length;i++)
-    {
-        org = orgs[i]
-        for(j = 0;j<org.employees.length;j++)
-        {
-            if( org.employees[j].email === employee.email )
+            if(organizationEmployees[j].email === employee.email)
             {
-                return org.employees[j]
+                return true
             }
         }
     }
     return false
 }
-
 
 async function searchEmployeeCredentials(employee)
 {
-    const orgs = await readContainerItems(org_conID)
-    for(i = 0;i<orgs.length;i++)
+    const conids = (await listConIDs()).filter(function (val) {
+        return val !== "Organizations"
+    })
+    for(i = 0; i < conids.length;i++)
     {
-        org = orgs[i]
-        for(j = 0;j<org.employees.length;j++)
+        var organizationEmployees = await (await Cosmos_DB.container(conids[i]).item("employees",undefined).read()).resource.employees
+        for(j = 0;j < organizationEmployees.length;j++)
         {
-            if( org.employees[j].email === employee.email && org.employees[j].password === employee.password )
+            if(organizationEmployees[j].email === employee.email && organizationEmployees[j].password === employee.password)
             {
-                return {organization: {id: org.id,name: org.name}, employee: org.employees[j]}
+                orgname = await (await Cosmos_DB.container(conids[i]).item("organization",undefined).read()).resource.name
+                return {organization: {
+                    id:conids[i],
+                    name: orgname
+                }, 
+                employee: organizationEmployees[j]}
             }
         }
     }
     return false
 }
+async function newOrganizationEmployee(organization,employee)
+{
+    if(!(await searchEmployee(employee)))
+    {
+        organizationEmployees = (await getItemsFromContainer(organization,"employees","employees"))
+        const newEmployee = await Employee.createEmployee(employee,"employee")
+        organizationEmployees.push( newEmployee )
+        await Cosmos_DB.container(organization).item("employees").replace({id:"employees",employees: organizationEmployees})
+        orgname = await (await Cosmos_DB.container(organization).item("organization",undefined).read()).resource.name
+        employee = newEmployee
+        return {
+            organization: {
+                id:organization,
+                name: orgname
+            },
+            employee
+        }
+    }
+    else
+    {
+        return {id:409}
+    }
+}
 
+//returneaza lista departamentelor,proiectelor,angajatilor 
+//organization: id organizatie, container, id container, field id field
+async function getItemsFromContainer(organization,container,field)
+{
+    const items = (await Cosmos_DB.container(organization).item(container,undefined).read()).resource[field]
+    return items
+}
 
 module.exports = {
     createOrganization,
     readContainerItems,
-    pushEmployee,
-    searchEmployeeCredentials,
-    searchEmployeeEmail,
-
+    newOrganizationEmployee,
+    searchEmployeeCredentials
 }
