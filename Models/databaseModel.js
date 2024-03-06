@@ -20,6 +20,19 @@ async function listConIDs()
     }
     return idlist
 }
+/*
+async function deletecons()
+{
+    const conids = (await listConIDs()).filter(function (val) {
+        return val !== "Organizations"
+    })
+    for(i = 0; i < conids.length;i++)
+    {
+        await Cosmos_DB.container(conids[i]).delete()
+    }
+}
+deletecons()
+*/
 //returns a list of every item in a container
 //used to see full organization data
 async function readContainerItems(conID)
@@ -48,6 +61,7 @@ async function replaceOrganizationField(organization,container,newfield)
 async function createContainerField(organization,field)
 {
     await Cosmos_DB.containers.createIfNotExists({id:organization})
+    await Cosmos_DB.container(organization).items.create(field)
 
 }
 
