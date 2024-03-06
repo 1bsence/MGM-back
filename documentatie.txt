@@ -162,3 +162,44 @@ format response login:
 }
 
 erori login: 404
+
+format request departament:
+{
+    "organization":{
+        "id": "42c46824-128a-42b6-b680-bd4fa04c3347"
+    },
+    "department":{
+        "name": "Turbo Trantori",
+        "manager": "97594d9b-61ff-4766-aad8-e2b762e77a54",
+        "skills": ["Ce skill-uri ai tu ma", "N-am skill-uri sefu"],
+        "employees": ["97594d9b-61ff-4766-aad8-e2b762e77a54",
+        "76362ba1-1efd-4555-a0cb-febe353ec1c0"]
+    }
+}
+manager: id manager
+angajati : primul din lista id-ul managerului, urmatoarele id-uri ale angajatilor
+
+format response:
+{
+    "organization": {
+        "id": "42c46824-128a-42b6-b680-bd4fa04c3347",
+        "name": "MGM TURBO MEISTER KURWA 1.0"
+    },
+    "department": {
+        "id": "43e1674e-1ca0-45b0-86f4-09dfcb5e1a9b",
+        "name": "Turbo Trantori",
+        "manager": "97594d9b-61ff-4766-aad8-e2b762e77a54",
+        "skills": [
+            "Ce skill-uri ai tu ma",
+            "N-am skill-uri sefu"
+        ],
+        "employees": [
+            "97594d9b-61ff-4766-aad8-e2b762e77a54",
+            "76362ba1-1efd-4555-a0cb-febe353ec1c0"
+        ]
+    }
+}
+
+erori: 
+
+409 conflict nume departament

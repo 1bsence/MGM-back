@@ -79,7 +79,7 @@ async function newOrganizationEmployee(organization,employee)
 
         organizationEmployees.push( newEmployee )
 
-        await Database.replaceOrganizationField(organization,"employees",organizationEmployees)
+        await Database.replaceOrganizationField(organization,"employees","employees",organizationEmployees)
 
         orgname = await Database.listOrganizationField(organization,"organization","name")
         employee = newEmployee
@@ -96,10 +96,31 @@ async function newOrganizationEmployee(organization,employee)
         return {id:409}
     }
 }
+//updateaza campul departament al unui obiect angajat 
+// organization = id organizatie, employees = lista DOAR CU ID-URILE ANGAJATILOR DIN DEPARTAMENT
+//departmentname - numele departamentului
+
+//TREBUIE SCHIMBATE DREPTURILE MANAGERULUI!!!
+async function updateEmployeeDepartment(organization,employees,departmentname)
+{
+    const oldemployees = await Database.listOrganizationField(organization,"employees","employees");
+    for(i = 0;i<oldemployees.length;i++)
+    {
+        for(j = 0;j<employees.length;j++)
+        {
+            if(oldemployees[i].id === employees[j])
+            {
+                oldemployees[i].department = departmentname
+            }
+        }
+    }
+    await Database.replaceOrganizationField(organization,"employees","employees",oldemployees)
+}
 
 module.exports = {
     createEmployee,
     searchEmployee,
     newOrganizationEmployee,
-    searchEmployeeCredentials
+    searchEmployeeCredentials,
+    updateEmployeeDepartment
 }

@@ -3,6 +3,7 @@ const http = require("http")
 const {newEmployee,loginEmployee} = require("./Controllers/employeeController.js")
 const {newOrganization} = require("./Controllers/organizationController.js")
 const {getcondata} = require("./Controllers/databaseController.js")
+const {addDepartment}= require("./Controllers/departmentController.js")
 const headers = {
     'Access-Control-Allow-Origin': '*', /* @dev First, read about security */
     'Access-Control-Allow-Methods': '*',
@@ -35,6 +36,10 @@ const server = http.createServer((req, res) => {
     {
         res.writeHead(200,headers)
         res.end(JSON.stringify({message: "MGM BACK END"}))  
+    }
+    else if(req.url ==="/department" && req.method === "POST")
+    {
+        addDepartment(req,res)
     }
     else
     {

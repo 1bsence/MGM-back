@@ -52,10 +52,13 @@ async function listOrganizationField(organization,container,field)
     const items = (await Cosmos_DB.container(organization).item(container,undefined).read()).resource[field]
     return items
 }
-
-async function replaceOrganizationField(organization,container,newfield)
+//innoieste datele din baza, folosit pentru a updata un item dintr-un container eg departamente/proiecte/angajati
+//organization - id organizatie, container - numele containerului eg projects/departments/employees
+//fieldid = numele campului nou dupa inlocuire PUNE-L LA FEL CA LA CONTAINER: container = "employees" =>fieldid = "employees"!!!! altfel crapa codul boss
+//newfield lista cu valorile updatate eg lista angajatilor cu schimbari /departamente cu schimbari
+async function replaceOrganizationField(organization,container,fieldid,newfield)
 {
-    await Cosmos_DB.container(organization).item(container).replace({id:container,employees: newfield})
+    await Cosmos_DB.container(organization).item(container).replace({id:container,[fieldid]: newfield})
 }
 
 async function createContainerField(organization,field)
