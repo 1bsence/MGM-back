@@ -1,5 +1,4 @@
-const Database = require("../Models/databaseModel.js")
-const { createEmployee } = require("../Models/employeeModel.js")
+const Employee = require("../Models/employeeModel.js")
 const { getPostData } = require("../utilities.js")
 
 const headers = {
@@ -10,34 +9,14 @@ const headers = {
     'Access-Control-Allow-Credentials': 'true',
     "Access-Control-Allow-Headers": "Origin, X-Api-Key, X-Requested-With, Content-Type, Accept, Authorization"
     /** add other headers as per requirement */
-};
-
-async function newOrganization(req,res)
-{
-    try{
-       // const data = await getPostData(req)
-        const result = await Database.createOrganization(await getPostData(req))
-        if(result.id == 201)
-        {
-            res.writeHead(201,headers)
-            res.end(JSON.stringify(result)) 
-        }
-        else
-        {
-            res.writeHead(409,headers)
-            res.end(JSON.stringify(result)) 
-        }
-    }catch(error){
-        console.log(error)
-    }
 }
 
 async function newEmployee(req,res)
 {
     const org_id = req.url.match(/\/signup\/(.*)/)[1]
     const data =await getPostData(req)
-    const employee = await createEmployee(data.employee,"employee")
-    const result = await Database.newOrganizationEmployee(org_id,employee)
+    const employee = await Employee.createEmployee(data.employee,"employee")
+    const result = await Employee.newOrganizationEmployee(org_id,employee)
     if(result.id === 201)
     {
         res.writeHead(201,headers)
@@ -50,7 +29,7 @@ async function newEmployee(req,res)
 }
 async function loginEmployee(req,res)
 {
-    const result = await Database.searchEmployeeCredentials(await getPostData(req))
+    const result = await Employee.searchEmployeeCredentials(await getPostData(req))
     if(result)
     {
         res.writeHead(201,headers)
@@ -63,7 +42,6 @@ async function loginEmployee(req,res)
     }
 }
 module.exports = {
-    newOrganization,
+    loginEmployee,
     newEmployee,
-    loginEmployee
 }

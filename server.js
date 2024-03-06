@@ -1,7 +1,7 @@
 const http = require("http")
 
-const {newOrganization,newEmployee,loginEmployee} = require("./Controllers/employeeController.js")
-
+const {newEmployee,loginEmployee} = require("./Controllers/employeeController.js")
+const {newOrganization} = require("./Controllers/organizationController.js")
 const {getcondata} = require("./Controllers/databaseController.js")
 const headers = {
     'Access-Control-Allow-Origin': '*', /* @dev First, read about security */
