@@ -117,10 +117,26 @@ async function updateEmployeeDepartment(organization,employees,departmentname)
     await Database.replaceOrganizationField(organization,"employees","employees",oldemployees)
 }
 
+async function updateEmployeeRights(organization,employee,rights)
+{
+    const oldemployees = await Database.listOrganizationField(organization,"employees","employees");
+    for(i = 0;i<oldemployees.length;i++)
+    {
+        if(oldemployees[i].id === employee)
+        {
+            oldemployees[i].rights = await getRights("rights.json",rights)
+            oldemployees[i].role = rights
+            break
+        }
+    }
+    await Database.replaceOrganizationField(organization,"employees","employees",oldemployees)
+}
+
 module.exports = {
     createEmployee,
     searchEmployee,
     newOrganizationEmployee,
     searchEmployeeCredentials,
-    updateEmployeeDepartment
+    updateEmployeeDepartment,
+    updateEmployeeRights
 }

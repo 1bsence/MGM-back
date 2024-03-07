@@ -1,10 +1,46 @@
 [
     {
         "id": "administrator",
-        "canDoEverything": "true"
+        "canPromoteEmployees": "true",
+        "canCreateDepartments": "true",
+        "canCreateProjects": "true",
+        "canViewEmployees": "true",
+        "canViewDepartments":"true",
+        "canViewProjects": "true",
+        "canEditDepartments": "true",
+        "canEditProjects":"true"
     },
     {
         "id": "employee",
-        "canDoEverything": "false"
+        "canPromoteEmployees": "false",
+        "canCreateDepartments": "false",
+        "canCreateProjects": "false",
+        "canViewEmployees": "false",
+        "canViewDepartments":"false",
+        "canViewProjects": "true",
+        "canEditDepartments": "false",
+        "canEditProjects":"true"
+    },
+    {
+        "id": "department_manager",
+        "canPromoteEmployees": "false",
+        "canCreateDepartments": "false",
+        "canCreateProjects": "false",
+        "canViewEmployees": "true",
+        "canViewDepartments":"true",
+        "canViewProjects": "true",
+        "canEditDepartments": "true",
+        "canEditProjects":"false"
+    },
+    {
+        "id": "project_manager",
+        "canPromoteEmployees": "false",
+        "canCreateDepartments": "false",
+        "canCreateProjects": "true",
+        "canViewEmployees": "true",
+        "canViewDepartments":"true",
+        "canViewProjects": "true",
+        "canEditDepartments": "false",
+        "canEditProjects":"true"
     }
 ]

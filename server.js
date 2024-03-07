@@ -1,9 +1,10 @@
 const http = require("http")
 
-const {newEmployee,loginEmployee} = require("./Controllers/employeeController.js")
+const {newEmployee,loginEmployee,promoteEmployee} = require("./Controllers/employeeController.js")
 const {newOrganization} = require("./Controllers/organizationController.js")
 const {getcondata} = require("./Controllers/databaseController.js")
 const {addDepartment}= require("./Controllers/departmentController.js")
+
 const headers = {
     'Access-Control-Allow-Origin': '*', /* @dev First, read about security */
     'Access-Control-Allow-Methods': '*',
@@ -15,10 +16,13 @@ const headers = {
 };
 const server = http.createServer((req, res) => {
     
-
     if(req.url ==="/signup" && req.method === "POST")
     {
         newOrganization(req,res)
+    }
+    if(req.url ==="/promotion" && req.method === "POST")
+    {
+        promoteEmployee(req,res)
     }
     else if(req.url.match(/\/signup\/(.*)/) && req.method === "POST")
     {

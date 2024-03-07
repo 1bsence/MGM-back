@@ -30,7 +30,7 @@ async function newOrganizationDepartment(organization,department)
         await Database.replaceOrganizationField(organization,"departments","departments",organizationDepartments)
 
         await Employee.updateEmployeeDepartment(organization,department.employees,department.name)
-
+        
         orgname = await Database.listOrganizationField(organization,"organization","name")
         department = newDepartment
         return {

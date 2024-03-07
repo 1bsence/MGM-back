@@ -41,7 +41,23 @@ async function loginEmployee(req,res)
         res.end(JSON.stringify({id:404}))
     }
 }
+
+/* request:
+{
+    organization: orgid
+    employee: employeeid
+    role: new role: administrator/employee/department_manager/project_manager
+}
+*/
+async function promoteEmployee(req,res)
+{
+    data = await getPostData(req)
+    await Employee.updateEmployeeRights(data.organization,data.employee,data.role)
+    res.writeHead(200,headers)
+    res.end(JSON.stringify({message:"employee updated"})) 
+}
 module.exports = {
     loginEmployee,
     newEmployee,
+    promoteEmployee
 }
