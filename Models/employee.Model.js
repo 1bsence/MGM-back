@@ -1,6 +1,6 @@
 const { getRights } = require("../utilities.js")
 const { randomUUID } = require('crypto')
-const Database = require("./databaseModel.js")
+const Database = require("./database.Model.js")
 
 //creates an employee object that can be appended to an organization's list
 //of employees. employee: obj, role = employee/administrator...etc
@@ -132,10 +132,9 @@ async function updateEmployeeRoles(organization, employee, role, add) {
 async function searchEmployeesByDepartment(organization, department) {
     const employees = await Database.listOrganizationField(organization, "employees", "employees");
     matchingEmployees = []
-
     for (i = 0; i < employees.length; i++) {
         emps = employees[i]
-        if (emps.department === department) {
+        if (emps.department === department || department === "any") {
             matchingEmployees.push({
                 id: emps.id,
                 name: emps.name,

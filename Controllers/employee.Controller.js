@@ -1,4 +1,4 @@
-const Employee = require("../Models/employeeModel.js")
+const Employee = require("../Models/employee.Model.js")
 const { getPostData } = require("../utilities.js")
 
 const headers = {

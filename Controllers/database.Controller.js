@@ -1,4 +1,4 @@
-const Database = require("../Models/databaseModel.js")
+const Database = require("../Models/database.Model.js")
 const { getPostData } = require("../utilities.js")
 
 const headers = {

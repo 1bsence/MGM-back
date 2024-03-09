@@ -1,5 +1,5 @@
-const Employee = require("./employeeModel.js")
-const Database = require("./databaseModel.js")
+const Employee = require("./employee.Model.js")
+const Database = require("./database.Model.js")
 
 const { randomUUID } = require('crypto')
 

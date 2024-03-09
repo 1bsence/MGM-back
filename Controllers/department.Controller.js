@@ -1,4 +1,4 @@
-const Department = require("../Models/departmentModel.js")
+const Department = require("../Models/department.Model.js")
 const { getPostData } = require("../utilities.js")
 
 const headers = {

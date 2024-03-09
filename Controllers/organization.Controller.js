@@ -1,4 +1,4 @@
-const Organization = require("../Models/organizationModel")
+const Organization = require("../Models/organization.Model.js")
 
 const {getPostData} = require("../utilities.js")
 

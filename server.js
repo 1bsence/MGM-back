@@ -1,9 +1,9 @@
 const http = require("http")
 
-const { searchByDepartment,newEmployee, loginEmployee, promoteEmployee } = require("./Controllers/employeeController.js")
-const { newOrganization } = require("./Controllers/organizationController.js")
-const { getcondata } = require("./Controllers/databaseController.js")
-const { addDepartment,readDepartment,modifyDepartment,removeDepartment } = require("./Controllers/departmentController.js")
+const { searchByDepartment,newEmployee, loginEmployee, promoteEmployee } = require("./Controllers/employee.Controller.js")
+const { newOrganization } = require("./Controllers/organization.Controller.js")
+const { getcondata } = require("./Controllers/database.Controller.js")
+const { addDepartment,readDepartment,modifyDepartment,removeDepartment } = require("./Controllers/department.Controller.js")
 
 const headers = {
     'Access-Control-Allow-Origin': '*', /* @dev First, read about security */
