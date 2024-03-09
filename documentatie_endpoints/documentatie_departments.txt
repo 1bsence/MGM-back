@@ -1,0 +1,108 @@
+format request department/create
+{
+    "organization":{
+        "id": "371bdf1d-5932-42f7-a229-64f16e8682e2"
+    },
+    "department":{
+        "name": "C++"
+    }
+}
+
+format raspuns :
+
+{
+    "organization": {
+        "id": "371bdf1d-5932-42f7-a229-64f16e8682e2",
+        "name": "mgm"
+    },
+    "department": {
+        "id": "1b5f5c5e-0948-4e0e-8886-9b32b8b7fa42",
+        "name": "C++",
+        "manager": " ",
+        "skills": [],
+        "employees": []
+    }
+}
+
+format request department/read:
+{
+    "organization": {
+        "id": "371bdf1d-5932-42f7-a229-64f16e8682e2"
+    },
+    "department": {
+        "id": "1b5f5c5e-0948-4e0e-8886-9b32b8b7fa42"
+    }
+}
+
+format raspuns:
+
+{
+    "id": "1b5f5c5e-0948-4e0e-8886-9b32b8b7fa42",
+    "name": "C++",
+    "manager": "a94ea5df-c522-4398-a283-1a4971f54bb3",
+    "skills": [],
+    "employees": [
+        "fb6272b4-e115-4ee6-9f5f-6c8ad3291ab4",
+        "3ca24ea6-e57b-4be9-bd40-9894a8fd075e",
+        "a94ea5df-c522-4398-a283-1a4971f54bb3"
+    ]
+}
+
+format request department/modify:
+
+{
+    "organization": {
+        "id": "371bdf1d-5932-42f7-a229-64f16e8682e2"
+    },
+    "department": {
+        "id": "1b5f5c5e-0948-4e0e-8886-9b32b8b7fa42",
+        "name": "C++",
+        "manager": "a94ea5df-c522-4398-a283-1a4971f54bb3",
+        "skills": [],
+        "employees": ["fb6272b4-e115-4ee6-9f5f-6c8ad3291ab4",
+        "3ca24ea6-e57b-4be9-bd40-9894a8fd075e"]
+
+    }
+}
+
+format raspuns :
+
+{
+    "organization": {
+        "id": "371bdf1d-5932-42f7-a229-64f16e8682e2",
+        "name": "mgm"
+    },
+    "department": {
+        "id": "1b5f5c5e-0948-4e0e-8886-9b32b8b7fa42",
+        "name": "C++",
+        "manager": "a94ea5df-c522-4398-a283-1a4971f54bb3",
+        "skills": [],
+        "employees": [
+            "fb6272b4-e115-4ee6-9f5f-6c8ad3291ab4",
+            "3ca24ea6-e57b-4be9-bd40-9894a8fd075e",
+            "a94ea5df-c522-4398-a283-1a4971f54bb3"
+        ]
+    }
+}
+
+format request department/remove:
+
+{
+    "organization": {
+        "id": "371bdf1d-5932-42f7-a229-64f16e8682e2"
+    },
+    "department": {
+        "id": "1b5f5c5e-0948-4e0e-8886-9b32b8b7fa42",
+        "name": "C++",
+        "manager": "a94ea5df-c522-4398-a283-1a4971f54bb3",
+        "skills": [],
+        "employees": [
+            "fb6272b4-e115-4ee6-9f5f-6c8ad3291ab4",
+            "3ca24ea6-e57b-4be9-bd40-9894a8fd075e",
+            "a94ea5df-c522-4398-a283-1a4971f54bb3"
+        ]
+    }
+}
+
+format raspuns :
+

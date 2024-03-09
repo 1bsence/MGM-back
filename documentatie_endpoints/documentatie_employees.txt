@@ -1,0 +1,103 @@
+format request signup admin:
+{
+    "organization": {
+                "name": "MGM TURBO MEISTER KURWA baaa",
+                "address": "C3"
+    },
+    "employee":{
+                "name": "ionut",
+                "email":"ionut2@gmail.com",
+                "password": "mypass"
+    }
+}
+
+format raspuns signup admin: 
+{
+    "organization": {
+        "id": "86578af5-2bb8-4507-a113-0bb612062589",
+        "name": "MGM TURBO MEISTER KURWA 3.0"
+    },
+    "employee": {
+        "id": "346c9ec3-45e5-424d-9a46-07bd9d25eb80",
+        "name": "ionut",
+        "email": "ionutspun2@gmail.com",
+        "password": "mypass",
+        "role": "employee",
+        "skills": [],
+        "rights": {
+            "id": "employee",
+            "canDoEverything": "true"
+        },
+        "projects": [],
+        "department": ""
+    }
+}
+
+erori signup admin: 409 conflict nume organizatie, 409 conflict email angajat
+
+format request signup angajat:
+{   
+    "employee":{    
+    "name": "Johanes2222",
+    "email": "tanker2223@gmail.com",
+    "password": "JohanMeister"
+    }
+}
+
+format response signup angajat:
+
+{
+    "organization": {
+        "id": "78908a37-34d7-40dc-81de-21111254d729",
+        "name": "MGM TURBO MEISTER KURWA baaa"
+    },
+    "employee": {
+        "id": "f6435ed5-c709-45e9-b3ed-9bde3b9a228c",
+        "name": "Johanes2222",
+        "email": "tanker2223@gmail.com",
+        "password": "JohanMeister",
+        "role": "employee",
+        "skills": [],
+        "rights": {
+            "id": "employee",
+            "canDoEverything": "true"
+        },
+        "projects": [],
+        "department": ""
+    }
+}
+
+erori: 409 conflict email angajat, 404 id organizatie nu exista (din url-ul cererii)
+
+format request login:
+{
+    "email": "ionut2@gmail.com",
+    "password": "mypass"
+}
+
+format response login:
+
+{
+    "organization": {
+        "id": "78908a37-34d7-40dc-81de-21111254d729",
+        "name": "MGM TURBO MEISTER KURWA baaa"
+    },
+    "employee": {
+        "id": "fcbc6749-d5bf-48e0-bd12-81671900da6f",
+        "name": "ionut",
+        "email": "ionut2@gmail.com",
+        "password": "mypass",
+        "role": "employee",
+        "skills": [],
+        "rights": {
+            "id": "employee",
+            "canDoEverything": "true"
+        },
+        "projects": [],
+        "department": ""
+    }
+}
+
+erori login: 404
+
+
