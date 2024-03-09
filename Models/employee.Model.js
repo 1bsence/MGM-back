@@ -100,29 +100,20 @@ async function updateEmployeeDepartment(organization, employees, departmentname)
     await Database.replaceOrganizationField(organization, "employees", "employees", oldemployees)
 }
 //updates the roles of an employee, organization = org id, employee, employee id, role, role to be added or removed, add = +/-
-async function updateEmployeeRoles(organization, employee, role, add) {
+async function updateEmployeeRoles(organization, employee, roles) {
     const oldemployees = await Database.listOrganizationField(organization, "employees", "employees");
+    newRoles = []
     for (i = 0; i < oldemployees.length; i++) {
         if (oldemployees[i].id === employee) {
-            if (oldemployees[i].roles.find((rol) => rol === role) && add === "+") {
-                return { id: 409 }
-            }
-            if (add === "+") {
-                oldemployees[i].roles.push(role)
-                await Database.replaceOrganizationField(organization, "employees", "employees", oldemployees)
-                return { id: 204 }
-            }
-            else {
-                roles = []
-                for (j = 0; j < oldemployees[i].roles.length; j++) {
-                    if (oldemployees[i].roles[j] !== role) {
-                        roles.push(oldemployees[i].roles[j])
-                    }
+            for (j = 0; j < roles.length; j++) {
+                if (roles[j].add === "+") {
+                    newRoles.push(roles[j].role)
                 }
-                oldemployees[i].roles = roles;
-                await Database.replaceOrganizationField(organization, "employees", "employees", oldemployees)
-                return { id: 204 }
             }
+            oldemployees[i].roles = newRoles
+            await Database.replaceOrganizationField(organization, "employees", "employees", oldemployees)
+            console.log(newRoles)
+            return { id: 204 }
         }
     }
     return { id: 404 }

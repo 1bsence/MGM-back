@@ -47,7 +47,7 @@ async function loginEmployee(req, res) {
 */
 async function promoteEmployee(req, res) {
     data = await getPostData(req)
-    const result = await Employee.updateEmployeeRoles(data.organization, data.employee, data.role, data.add)
+    const result = await Employee.updateEmployeeRoles(data.organization, data.employee, data.roles)
     res.writeHead(200, headers)
     res.end(JSON.stringify(result))
 }

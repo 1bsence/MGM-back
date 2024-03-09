@@ -1,4 +1,4 @@
-format request signup admin:
+format request signup admin: /signup
 {
     "organization": {
                 "name": "MGM TURBO MEISTER KURWA baaa",
@@ -44,7 +44,7 @@ format request signup angajat:
     }
 }
 
-format response signup angajat:
+format response signup angajat: /signup/[idorg]
 
 {
     "organization": {
@@ -75,7 +75,7 @@ format request login:
     "password": "mypass"
 }
 
-format response login:
+format response login: /login
 
 {
     "organization": {
@@ -100,4 +100,14 @@ format response login:
 
 erori login: 404
 
+format request promotion: /promotion
 
+{
+    "organization": "371bdf1d-5932-42f7-a229-64f16e8682e2",
+    "employee":"5f008684-9d20-40b8-adc4-fb97afcb534c" ,
+    "roles": [{"role":"department_manager","add": "+"},
+              {"role":"testing","add": "-"}]
+}
+
+format response promotion: id: 204 updatat
+                           id: 404 angajat inexistent

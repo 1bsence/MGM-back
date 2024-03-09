@@ -1,9 +1,9 @@
-format request see con :
+format request see con : /seecon
 {
     "id":"78908a37-34d7-40dc-81de-21111254d729"
 } unde id: id-ul containerului ce contine organizatia respectiva
 
-exemplu response see con:
+exemplu response see con: 
 [
     {
         "id": "organization",
