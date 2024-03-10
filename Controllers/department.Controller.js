@@ -20,7 +20,6 @@ async function addDepartment(req, res) {
 
 async function readDepartment(req, res) {
     const data = await getPostData(req)
-    console.log(data)
     result = await Department.listDepartment(data.organization.id, data.department.id)
     if (result) {
         res.writeHead(201, headers)

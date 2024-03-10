@@ -1,0 +1,16 @@
+format request: /employee/notifications
+{
+    "organization": "371bdf1d-5932-42f7-a229-64f16e8682e2",
+    "employee": "fb6272b4-e115-4ee6-9f5f-6c8ad3291ab4",
+    "notifications": [
+        {
+            "notification": "test",
+            "add": "+"
+        },
+        {
+            "notification": "test2",
+            "add": "-"
+        }
+    ]
+}
+

@@ -102,18 +102,16 @@ async function updateEmployeeDepartment(organization, employees, departmentname)
 }
 //updates the roles of an employee, organization = org id, employee, employee id, role, role to be added or removed, add = +/-
 async function updateEmployeeRoles(organization, employee, roles) {
+    if (!roles.find((obj) => obj === "Employee")) {
+        roles.push("Employee")
+    }
     const oldemployees = await Database.listOrganizationField(organization, "employees", "employees");
-    newRoles = []
     for (i = 0; i < oldemployees.length; i++) {
         if (oldemployees[i].id === employee) {
-            for (j = 0; j < roles.length; j++) {
-                if (roles[j].add === "+") {
-                    newRoles.push(roles[j].role)
-                }
-            }
-            oldemployees[i].roles = newRoles
+            oldemployees[i].roles = roles
             await Database.replaceOrganizationField(organization, "employees", "employees", oldemployees)
-            console.log(newRoles)
+
+            await newEmployeeNotification(organization, employee, { message: "Your roles have been updated!" })
             return { id: 204 }
         }
     }
@@ -138,6 +136,54 @@ async function searchEmployeesByDepartment(organization, department) {
     return matchingEmployees
 }
 
+async function newEmployeeNotification(organization, employee, notification) {
+    const oldemployees = await Database.listOrganizationField(organization, "employees", "employees")
+    for (i = 0; i < oldemployees.length; i++) {
+        if (oldemployees[i].id === employee) {
+            notification.id = randomUUID()
+            oldemployees[i].notifications.push(notification)
+            console.log(oldemployees[i].notifications)
+            await Database.replaceOrganizationField(organization, "employees", "employees", oldemployees)
+            return { id: 204 }
+        }
+    }
+    return { id: 404 }
+}
+
+async function deleteEmployeeNotification(organization, employee, notification) {
+    newNotifications = []
+    const oldemployees = await Database.listOrganizationField(organization, "employees", "employees");
+    for (i = 0; i < oldemployees.length; i++) {
+        if (oldemployees[i].id === employee) {
+            for (j = 0; j < oldemployees[i].notifications.length; j++) {
+                if (oldemployees[i].notifications[j].id !== notification) {
+                    newNotifications.push(oldemployees[i].notifications[j])
+                }
+            }
+            oldemployees[i].notifications = newNotifications
+            await Database.replaceOrganizationField(organization, "employees", "employees", oldemployees)
+            return { id: 204 }
+        }
+    }
+    return { id: 404 }
+}
+
+async function getAllEmployees(organization) {
+    const employees = await Database.listOrganizationField(organization, "employees", "employees");
+    matchingEmployees = []
+    for (i = 0; i < employees.length; i++) {
+        emps = employees[i]
+        matchingEmployees.push({
+            id: emps.id,
+            name: emps.name,
+            email: emps.email,
+            roles: emps.roles,
+            skills: emps.skills,
+        })
+    }
+    return matchingEmployees
+}
+
 module.exports = {
     createEmployee,
     searchEmployee,
@@ -145,5 +191,8 @@ module.exports = {
     searchEmployeeCredentials,
     updateEmployeeDepartment,
     updateEmployeeRoles,
-    searchEmployeesByDepartment
+    searchEmployeesByDepartment,
+    newEmployeeNotification,
+    deleteEmployeeNotification,
+    getAllEmployees
 }

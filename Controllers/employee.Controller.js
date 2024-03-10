@@ -52,9 +52,33 @@ async function promoteEmployee(req, res) {
     res.end(JSON.stringify(result))
 }
 
+async function listEmployees(req,res)
+{
+    data = await getPostData(req)
+    const result = await Employee.getAllEmployees(data.id)
+    res.writeHead(200, headers)
+    res.end(JSON.stringify(result))   
+}
+
 async function searchByDepartment(req, res) {
     data = await getPostData(req)
     const result = await Employee.searchEmployeesByDepartment(data.organization, data.department)
+    res.writeHead(200, headers)
+    res.end(JSON.stringify(result))
+}
+
+async function notifyEmployee(req,res)
+{
+    data = await getPostData(req)
+    const result = await Employee.newEmployeeNotification(data.organization,data.employee,data.notification)
+    res.writeHead(200, headers)
+    res.end(JSON.stringify(result))
+}
+
+async function notifiedEmployee(req,res)
+{
+    data = await getPostData(req)
+    const result = await Employee.deleteEmployeeNotification(data.organization,data.employee,data.notification)
     res.writeHead(200, headers)
     res.end(JSON.stringify(result))
 }
@@ -64,5 +88,8 @@ module.exports = {
     loginEmployee,
     newEmployee,
     promoteEmployee,
-    searchByDepartment
+    searchByDepartment,
+    notifyEmployee,
+    notifiedEmployee,
+    listEmployees
 }

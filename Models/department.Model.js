@@ -52,8 +52,7 @@ async function searchDepartment(organization, name) {
     return false
 }
 
-async function listDepartment(organization,id)
-{
+async function listDepartment(organization, id) {
     const departmentlist = await Database.listOrganizationField(organization, "departments", "departments")
     for (i = 0; i < departmentlist.length; i++) {
         if (departmentlist[i].id === id) {
@@ -107,7 +106,6 @@ async function deleteOrganizationDepartment(organization, department) {
         oldemployeesids.push(oldemployees[i].id)
     }
     if (oldemployees.length > 0) {
-        console.log("got to changing old department")
         await Employee.updateEmployeeDepartment(organization, oldemployeesids, " ")
     }
     await Database.deleteFromItemList(organization, "departments", "departments", department.id)

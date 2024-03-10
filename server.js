@@ -1,6 +1,6 @@
 const http = require("http")
 
-const { searchByDepartment,newEmployee, loginEmployee, promoteEmployee } = require("./Controllers/employee.Controller.js")
+const { searchByDepartment,newEmployee, loginEmployee, promoteEmployee,notifyEmployee,notifiedEmployee,listEmployees } = require("./Controllers/employee.Controller.js")
 const { newOrganization } = require("./Controllers/organization.Controller.js")
 const { getcondata,getallconsdata } = require("./Controllers/database.Controller.js")
 const { addDepartment,readDepartment,modifyDepartment,removeDepartment } = require("./Controllers/department.Controller.js")
@@ -21,8 +21,17 @@ const server = http.createServer((req, res) => {
     if (req.url === "/signup" && req.method === "POST") {
         newOrganization(req, res)
     }
-    else if (req.url === "/promotion" && req.method === "POST") {
+    else if (req.url === "/employee/promotion" && req.method === "POST") {
         promoteEmployee(req, res)
+    }
+    else if (req.url === "/employee/seeall" && req.method === "POST") {
+        listEmployees(req, res)
+    }
+    else if (req.url === "/notification/create" && req.method === "POST") {
+        notifyEmployee(req, res)
+    }
+    else if (req.url === "/notification/remove" && req.method === "POST") {
+        notifiedEmployee(req, res)
     }
     else if (req.url.match(/\/signup\/(.*)/) && req.method === "POST") {
         newEmployee(req, res)
