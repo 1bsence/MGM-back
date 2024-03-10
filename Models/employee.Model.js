@@ -178,7 +178,9 @@ async function getAllEmployees(organization) {
             name: emps.name,
             email: emps.email,
             roles: emps.roles,
-            skills: emps.skills,
+            department:emps.department,
+            projects: emps.projects,
+            skills: emps.skills
         })
     }
     return matchingEmployees
