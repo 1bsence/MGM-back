@@ -14,7 +14,8 @@ async function createEmployee(employee, role) {
         skills: [],
         //rights: await getRights("rights.json", role),
         projects: [],
-        department: " "
+        department: " ",
+        notifications: []
     }
 }
 //checks if an email address is already in use
@@ -129,7 +130,7 @@ async function searchEmployeesByDepartment(organization, department) {
             matchingEmployees.push({
                 id: emps.id,
                 name: emps.name,
-                role: emps.role,
+                roles: emps.roles,
                 skills: emps.skills
             })
         }

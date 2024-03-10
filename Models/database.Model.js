@@ -8,6 +8,14 @@ const key = process.env.COSMOS_KEY
 const dbid = process.env.COSMOS_DBID
 
 const Cosmos_DB = new CosmosClient({ endpoint, key }).database(dbid)
+/*
+createContainerField("371bdf1d-5932-42f7-a229-64f16e8682e2", {
+    id: "skills",
+    skills: []
+})
+*/
+
+
 
 //returns a list of every organization id
 async function listConIDs() {
@@ -39,6 +47,17 @@ async function readContainerItems(conID) {
         return { id: "404" }
     }
     return (await Cosmos_DB.container(conID).items.readAll().fetchAll()).resources
+}
+
+async function readDatabaseItems(){
+    const result = []
+    const conids = await listConIDs()
+    console.log(conids)
+    for(i = 0; i < conids.length; i++)
+    {
+        result.push(await readContainerItems(conids[i]))
+    }
+    return result
 }
 
 //returneaza lista departamentelor,proiectelor,angajatilor 
@@ -79,5 +98,6 @@ module.exports = {
     listConIDs,
     replaceOrganizationField,
     createContainerField,
-    deleteFromItemList
+    deleteFromItemList,
+    readDatabaseItems
 }

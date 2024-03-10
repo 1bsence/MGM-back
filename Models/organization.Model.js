@@ -24,6 +24,10 @@ async function createOrganization(data) {
         id: "departments",
         departments: []
     })
+    await Database.createContainerField(conid, {
+        id: "skills",
+        skills: []
+    })
     const employee = await Employee.createEmployee(data.employee, ["employee","administrator"])
     await Database.createContainerField(conid, {
         id: "employees",

@@ -26,6 +26,14 @@ async function getcondata(req,res)
     }
 }
 
+async function getallconsdata(req,res)
+{
+    result = await Database.readDatabaseItems()
+    res.writeHead(200,headers)
+    res.end(JSON.stringify(result))
+}
+
 module.exports = {
-    getcondata
+    getcondata,
+    getallconsdata
 }
