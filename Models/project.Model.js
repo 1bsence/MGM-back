@@ -1,5 +1,5 @@
 const Database = require("./database.Model.js")
-
+const Employee = require("./employee.Model.js")
 const { randomUUID } = require("crypto")
 
 
@@ -71,6 +71,7 @@ async function updateOrganizationProject(organization, project) {
     for (i = 0; i < organizationProjects.length; i++) {
         if (organizationProjects[i].id === project.id) {
             organizationProjects[i] = project
+            
             await Database.replaceOrganizationField(organization,"projects","projects",organizationProjects)
             return project
         }
@@ -106,9 +107,14 @@ async function listProject(organization, id) {
     }
     return false
 }
+
+async function listProjects(organization) {
+    return await Database.listOrganizationField(organization, "projects", "projects")
+}
 module.exports = {
     newOrganizationProject,
     updateOrganizationProject,
     deleteOrganizationProject,
-    listProject
+    listProject,
+    listProjects
 }

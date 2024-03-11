@@ -3,8 +3,8 @@ const http = require("http")
 const { searchByDepartment,newEmployee, loginEmployee, promoteEmployee,notifyEmployee,notifiedEmployee,listEmployees } = require("./Controllers/employee.Controller.js")
 const { newOrganization } = require("./Controllers/organization.Controller.js")
 const { getcondata,getallconsdata } = require("./Controllers/database.Controller.js")
-const { addDepartment,readDepartment,modifyDepartment,removeDepartment } = require("./Controllers/department.Controller.js")
-const { addProject,modifyProject,removeProject,readProject} = require("./Controllers/project.Controller.js")
+const { addDepartment,readDepartment,modifyDepartment,removeDepartment, listAllDepartments } = require("./Controllers/department.Controller.js")
+const { addProject,modifyProject,removeProject,readProject,listAllProjects} = require("./Controllers/project.Controller.js")
 const { addSkill} = require("./Controllers/skill.Controller.js")
 
 const headers = {
@@ -26,6 +26,12 @@ const server = http.createServer((req, res) => {
     }
     else if (req.url === "/employee/seeall" && req.method === "POST") {
         listEmployees(req, res)
+    }
+    else if (req.url === "/project/seeall" && req.method === "POST") {
+        listAllProjects(req, res)
+    }
+    else if (req.url === "/department/seeall" && req.method === "POST") {
+        listAllDepartments(req, res)
     }
     else if (req.url === "/notification/create" && req.method === "POST") {
         notifyEmployee(req, res)

@@ -12,7 +12,6 @@ async function createEmployee(employee, role) {
         password: employee.password,
         roles: role,
         skills: [],
-        //rights: await getRights("rights.json", role),
         projects: [],
         department: " ",
         notifications: []

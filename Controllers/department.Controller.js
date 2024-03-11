@@ -57,9 +57,18 @@ async function removeDepartment(req, res) {
     }
 }
 
+async function listAllDepartments(req,res)
+{
+    const data = await getPostData(req)
+    result = await Department.listDepartments(data.id)
+    res.writeHead(200, headers)
+    res.end(JSON.stringify(result))
+}
+
 module.exports = {
     addDepartment,
     removeDepartment,
     modifyDepartment,
-    readDepartment
+    readDepartment,
+    listAllDepartments
 }

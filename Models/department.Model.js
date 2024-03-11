@@ -112,11 +112,14 @@ async function deleteOrganizationDepartment(organization, department) {
     return { id: 204 }
 }
 
-
+async function listDepartments(organization) {
+    return await Database.listOrganizationField(organization, "departments", "departments")
+}
 
 module.exports = {
     newOrganizationDepartment,
     updateOrganizationDepartment,
     deleteOrganizationDepartment,
     listDepartment,
+    listDepartments
 }

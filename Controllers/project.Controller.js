@@ -58,9 +58,18 @@ async function readProject(req, res) {
     }
 }
 
+
+async function listAllProjects(req,res)
+{
+    const data = await getPostData(req)
+    result = await Project.listProjects(data.id)
+    res.writeHead(200, headers)
+    res.end(JSON.stringify(result))
+}
 module.exports = {
     addProject,
     modifyProject,
     removeProject,
-    readProject
+    readProject,
+    listAllProjects
 }
