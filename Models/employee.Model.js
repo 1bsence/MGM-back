@@ -1,4 +1,3 @@
-const { getRights } = require("../utilities.js")
 const { randomUUID } = require('crypto')
 const Database = require("./database.Model.js")
 
@@ -19,9 +18,7 @@ async function createEmployee(employee, role) {
 }
 //checks if an email address is already in use
 async function searchEmployee(employee) {
-    const conids = (await Database.listConIDs()).filter(function (val) {
-        return val !== "Organizations"
-    })
+    const conids = (await Database.listConIDs())
     for (i = 0; i < conids.length; i++) {
         var organizationEmployees = await Database.listOrganizationField(conids[i], "employees", "employees")
         for (j = 0; j < organizationEmployees.length; j++) {
@@ -36,9 +33,7 @@ async function searchEmployee(employee) {
 //if it finds a match returns the organization id,name and employee object
 //used for logging in, employee object is : {email, password}
 async function searchEmployeeCredentials(employee) {
-    const conids = (await Database.listConIDs()).filter(function (val) {
-        return val !== "Organizations"
-    })
+    const conids = (await Database.listConIDs())
     for (i = 0; i < conids.length; i++) {
         var organizationEmployees = await Database.listOrganizationField(conids[i], "employees", "employees")
         for (j = 0; j < organizationEmployees.length; j++) {
@@ -63,7 +58,7 @@ async function newOrganizationEmployee(organization, employee) {
     if (!(await searchEmployee(employee))) {
         organizationEmployees = (await Database.listOrganizationField(organization, "employees", "employees"))
 
-        const newEmployee = await createEmployee(employee, ["employee"])
+        const newEmployee = await createEmployee(employee, ["Employee"])
 
         organizationEmployees.push(newEmployee)
 
@@ -96,7 +91,6 @@ async function updateEmployeeDepartment(organization, employees, departmentname)
             }
         }
     }
-    console.log(oldemployees)
     await Database.replaceOrganizationField(organization, "employees", "employees", oldemployees)
 }
 //updates the roles of an employee, organization = org id, employee, employee id, role, role to be added or removed, add = +/-
@@ -141,7 +135,6 @@ async function newEmployeeNotification(organization, employee, notification) {
         if (oldemployees[i].id === employee) {
             notification.id = randomUUID()
             oldemployees[i].notifications.push(notification)
-            console.log(oldemployees[i].notifications)
             await Database.replaceOrganizationField(organization, "employees", "employees", oldemployees)
             return { id: 204 }
         }

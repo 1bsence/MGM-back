@@ -48,7 +48,7 @@ async function removeDepartment(req, res) {
     const data = await getPostData(req)
     result = await Department.deleteOrganizationDepartment(data.organization.id, data.department)
     if (result.id === 204) {
-        res.writeHead(204, headers)
+        res.writeHead(200, headers)
         res.end(JSON.stringify(result))
     }
     else {

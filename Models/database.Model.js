@@ -29,9 +29,7 @@ async function listConIDs() {
 /*
 async function deletecons()
 {
-    const conids = (await listConIDs()).filter(function (val) {
-        return val !== "Organizations"
-    })
+    const conids = (await listConIDs())
     for(i = 0; i < conids.length;i++)
     {
         await Cosmos_DB.container(conids[i]).delete()
@@ -52,7 +50,6 @@ async function readContainerItems(conID) {
 async function readDatabaseItems(){
     const result = []
     const conids = await listConIDs()
-    console.log(conids)
     for(i = 0; i < conids.length; i++)
     {
         result.push(await readContainerItems(conids[i]))
