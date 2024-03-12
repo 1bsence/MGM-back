@@ -27,7 +27,16 @@ async function newOrganizationDepartment(organization, department) {
         await Database.replaceOrganizationField(organization, "departments", "departments", organizationDepartments)
 
         orgname = await Database.listOrganizationField(organization, "organization", "name")
+
         department = newDepartment
+        administrators = (await Employee.getAllEmployees(organization)).filter((employee)=>employee.roles.find((role) =>role === "Administrator"))
+        for(i = 0; i < administrators.length;i++)
+        {
+            await Employee.newEmployeeNotification(organization,administrators[i].id,
+                {
+                    parent: department.id,
+                    message:"A new department has been created!"})
+        }       
         return {
             organization: {
                 id: organization,
@@ -82,7 +91,13 @@ async function updateOrganizationDepartment(organization, department) {
             oldDepartment.employees = department.employees
 
             await Employee.updateEmployeeDepartment(organization, department.employees, department.name)
-
+            for(j = 0;j < department.employees.length; j++)
+            {
+                await Employee.newEmployeeNotification(organization,department.employees[j],
+                    {
+                        parent: department.id,
+                        message:"You have been assigned to a new department!"})
+            }
             break
         }
     }

@@ -5,7 +5,7 @@ const { addDepartment,readDepartment,modifyDepartment,removeDepartment, listAllD
 const { addProject,modifyProject,removeProject,readProject,listAllProjects} = require("./Controllers/project.Controller.js")
 const { getcondata,getallconsdata } = require("./Controllers/database.Controller.js")
 const { newOrganization } = require("./Controllers/organization.Controller.js")
-const { addSkill} = require("./Controllers/skill.Controller.js")
+const { addSkill,readSkill,modifySkill,removeSkill} = require("./Controllers/skill.Controller.js")
 
 const headers = {
     'Access-Control-Allow-Origin': '*', /* @dev First, read about security */
@@ -84,6 +84,15 @@ const server = http.createServer((req, res) => {
     }
     else if (req.url === "/skill/create" && req.method === "POST") {
         addSkill(req, res)
+    }
+    else if (req.url === "/skill/read" && req.method === "POST") {
+        readSkill(req, res)
+    }
+    else if (req.url === "/skill/modify" && req.method === "POST") {
+        modifySkill(req, res)
+    }
+    else if (req.url === "/skill/remove" && req.method === "POST") {
+        removeSkill(req, res)
     }
     else {
         res.writeHead(404, headers)

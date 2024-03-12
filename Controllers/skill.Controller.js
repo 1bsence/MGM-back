@@ -18,6 +18,46 @@ async function addSkill(req, res) {
     res.end(JSON.stringify(result))
 }
 
+async function readSkill(req,res){
+    const data = await getPostData(req)
+    result = await Skill.readSkill(data.organization.id, data.skill.id)
+    if (result) {
+        res.writeHead(201, headers)
+        res.end(JSON.stringify(result))
+    }
+    else {
+        res.writeHead(404, headers)
+        res.end("Not Found")
+    }
+}
+async function modifySkill(req,res){
+    const data = await getPostData(req)
+    result = await Skill.updateSkill(data.organization.id, data.skill)
+    if (result) {
+        res.writeHead(201, headers)
+        res.end(JSON.stringify(result))
+    }
+    else {
+        res.writeHead(404, headers)
+        res.end("Not Found")
+    }
+}
+async function removeSkill(req,res){
+    const data = await getPostData(req)
+    result = await Skill.deleteSkill(data.organization.id, data.skill)
+    if (result.id === 204) {
+        res.writeHead(200, headers)
+        res.end(JSON.stringify(result))
+    }
+    else {
+        res.writeHead(404, headers)
+        res.end("Not Found")
+    }
+}    
+
 module.exports = {
-    addSkill
+    addSkill,
+    readSkill,
+    modifySkill,
+    removeSkill
 }

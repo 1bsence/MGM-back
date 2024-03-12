@@ -1,0 +1,97 @@
+request skill/create :
+
+{
+    "organization": {
+        "id": "f6171e0c-661d-4629-919e-9a323e633f91"
+    },
+    "skill": {
+        "name":"Testing",
+        "category":"Testing",
+        "author":"Testing",
+        "departments":["Testing"],
+        "description":"Testing",
+        "level":"Testing",
+        "endorsement":"Testing",
+        "validated":"Testing"
+    }
+}
+
+response skill/create:
+{
+    "organization": {
+        "id": "f6171e0c-661d-4629-919e-9a323e633f91",
+        "name": "MGM TESTING"
+    },
+    "skill": {
+        "id": "82eea454-4a2d-4dc1-a725-83c99e137091",
+        "name": "Testing",
+        "category": "Testing",
+        "author": "Testing",
+        "departments": [],
+        "description": "Testing",
+        "level": "Testing",
+        "endorsement": "Testing",
+        "validated": "Testing"
+    }
+}
+
+request skill/modify:
+
+{
+    "organization": {
+        "id": "f6171e0c-661d-4629-919e-9a323e633f91",
+    },
+    "skill": {
+        "id": "82eea454-4a2d-4dc1-a725-83c99e137091",
+        /*
+        MODIFY ANY VALUES HERE 
+        */
+        "name": "Testing",
+        "category": "Testing",
+        "author": "Testing",
+        "departments": [],
+        "description": "Testing",
+        "level": "Testing",
+        "endorsement": "Testing",
+        "validated": "Testing"
+    }
+}
+
+response: 204,409
+
+format request skill/read:
+{
+    "organization": {
+        "id": "f6171e0c-661d-4629-919e-9a323e633f91"
+    },
+    "skill": {
+        "id": "82eea454-4a2d-4dc1-a725-83c99e137091"
+    }
+}
+
+format response skill/read:
+{
+    "id": "82eea454-4a2d-4dc1-a725-83c99e137091",
+    "name": "MODIFIED NAME",
+    "category": "Testing",
+    "author": "Testing",
+    "departments": [],
+    "description": "Testing",
+    "level": "Testing",
+    "endorsement": "Testing",
+    "validated": "Testing"
+}
+sau 409
+
+format request skill/remove:
+
+{
+    "organization": {
+        "id": "f6171e0c-661d-4629-919e-9a323e633f91"
+    },
+    "skill": {
+        "id": "82eea454-4a2d-4dc1-a725-83c99e137091"
+    }
+}
+
+response: 204

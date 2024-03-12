@@ -32,6 +32,14 @@ async function newOrganizationProject(organization, project) {
 
         orgname = await Database.listOrganizationField(organization, "organization", "name")
         project = newProject
+        administrators = (await Employee.getAllEmployees(organization)).filter((employee)=>employee.roles.find((role) =>role === "Administrator"))
+        for(i = 0; i < administrators.length;i++)
+        {
+            await Employee.newEmployeeNotification(organization,administrators[i].id,
+                {
+                    parent: project.id,
+                    message:"A new project has been created!"})
+        }   
         return {
             organization: {
                 id: organization,
