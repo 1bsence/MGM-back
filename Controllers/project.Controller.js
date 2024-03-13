@@ -35,7 +35,7 @@ async function removeProject(req, res) {
     const data = await getPostData(req)
     result = await Project.deleteOrganizationProject(data.organization.id, data.project)
     if (result.id === 204) {
-        res.writeHead(204, headers)
+        res.writeHead(200, headers)
         res.end(JSON.stringify(result))
     }
     else {

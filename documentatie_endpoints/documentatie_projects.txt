@@ -1,0 +1,64 @@
+request project/create:
+{
+    "organization": {
+        "id": "f6171e0c-661d-4629-919e-9a323e633f91"
+    },
+    "project": {
+        "name": "testing boss"
+    }
+}
+
+response: 
+
+{
+    "organization": {
+        "id": "f6171e0c-661d-4629-919e-9a323e633f91",
+        "name": "MGM TESTING"
+    },
+    "project": {
+        "id": "becd0d1b-b196-47a4-b21a-1fdfb37399a4",
+        "name": "testing boss",
+        "span": " ",
+        "status": " ",
+        "start": " ",
+        "deadline": " ",
+        "manager": " ",
+        "employees": [],
+        "description": " ",
+        "technologies": " "
+    }
+}
+
+request project/modify:
+
+{
+    "organization": {
+        "id": "f6171e0c-661d-4629-919e-9a323e633f91",
+    },
+    "project": {
+        "id": "becd0d1b-b196-47a4-b21a-1fdfb37399a4",
+        "name": "testing boss",
+        "span": " ",
+        "status": " ",
+        "start": " ",
+        "deadline": " ",
+        "manager": " ",
+        "employees": [],
+        "description": " ",
+        "technologies": " "
+    }
+}
+
+response:
+{
+    "id": "becd0d1b-b196-47a4-b21a-1fdfb37399a4",
+    "name": "testing boss 2",
+    "span": "nu cunosc",
+    "status": "maine",
+    "start": " ",
+    "deadline": " ",
+    "manager": " ",
+    "employees": [],
+    "description": " ",
+    "technologies": " "
+}

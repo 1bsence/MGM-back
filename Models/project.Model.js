@@ -7,14 +7,14 @@ async function createProject(project) {
     const newProject = {
         id: randomUUID(),
         name: project.name,
-        span: project.span,
-        status: project.status,
-        start: project.start,
-        deadline: project.deadline,
+        span: " ",
+        status: " ",
+        start: " ",
+        deadline: " ",
         manager: " ",
         employees: [],
-        description: project.description,
-        technologies: project.technologies
+        description: " ",
+        technologies: " "
     }
     return newProject
 }
@@ -78,8 +78,14 @@ async function updateOrganizationProject(organization, project) {
     const organizationProjects = await Database.listOrganizationField(organization, "projects", "projects")
     for (i = 0; i < organizationProjects.length; i++) {
         if (organizationProjects[i].id === project.id) {
-            organizationProjects[i] = project
-            
+            newEmployees = []
+            for(j = 0; j < project.employees.length; j++)
+            {
+                if(project.employees.status !== "active"){
+                    newEmployees.push( { employee:project.employees[j],status: "proposed"} )
+                }
+            }
+            project.employees = newEmployees
             await Database.replaceOrganizationField(organization,"projects","projects",organizationProjects)
             return project
         }
