@@ -129,6 +129,25 @@ async function searchEmployeesByDepartment(organization, department) {
     return matchingEmployees
 }
 
+async function searchEmployeesByRole(organization, role) {
+    const employees = await Database.listOrganizationField(organization, "employees", "employees");
+    matchingEmployees = []
+    for (i = 0; i < employees.length; i++) {
+        emps = employees[i]
+        if (emps.roles.find((obj)=> obj === role)) {
+            matchingEmployees.push({
+                id: emps.id,
+                name: emps.name,
+                roles: emps.roles,
+                skills: emps.skills
+            })
+        }
+    }
+    return matchingEmployees
+}
+
+
+
 async function newEmployeeNotification(organization, employee, notification) {
     const oldemployees = await Database.listOrganizationField(organization, "employees", "employees")
     for (i = 0; i < oldemployees.length; i++) {
@@ -186,6 +205,7 @@ module.exports = {
     updateEmployeeDepartment,
     updateEmployeeRoles,
     searchEmployeesByDepartment,
+    searchEmployeesByRole,
     newEmployeeNotification,
     deleteEmployeeNotification,
     getAllEmployees

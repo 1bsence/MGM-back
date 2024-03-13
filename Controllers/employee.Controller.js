@@ -67,6 +67,13 @@ async function searchByDepartment(req, res) {
     res.end(JSON.stringify(result))
 }
 
+async function searchByRole(req, res) {
+    data = await getPostData(req)
+    const result = await Employee.searchEmployeesByRole(data.organization, data.role)
+    res.writeHead(200, headers)
+    res.end(JSON.stringify(result))
+}
+
 async function notifyEmployee(req,res)
 {
     data = await getPostData(req)
@@ -91,5 +98,6 @@ module.exports = {
     searchByDepartment,
     notifyEmployee,
     notifiedEmployee,
-    listEmployees
+    listEmployees,
+    searchByRole
 }

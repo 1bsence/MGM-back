@@ -1,6 +1,6 @@
 const http = require("http")
 
-const { searchByDepartment,newEmployee, loginEmployee, promoteEmployee,notifyEmployee,notifiedEmployee,listEmployees } = require("./Controllers/employee.Controller.js")
+const { searchByDepartment,newEmployee, loginEmployee, promoteEmployee,notifyEmployee,notifiedEmployee,listEmployees,searchByRole } = require("./Controllers/employee.Controller.js")
 const { addDepartment,readDepartment,modifyDepartment,removeDepartment, listAllDepartments } = require("./Controllers/department.Controller.js")
 const { addProject,modifyProject,removeProject,readProject,listAllProjects} = require("./Controllers/project.Controller.js")
 const { getcondata,getallconsdata } = require("./Controllers/database.Controller.js")
@@ -67,8 +67,11 @@ const server = http.createServer((req, res) => {
     else if (req.url === "/department/remove" && req.method === "POST") {
         removeDepartment(req, res)
     }
-    else if (req.url === "/searchbydepartment" && req.method === "POST") {
+    else if (req.url === "/employee/searchbydepartment" && req.method === "POST") {
         searchByDepartment(req, res)
+    }
+    else if (req.url === "/employee/searchbyrole" && req.method === "POST") {
+        searchByRole(req, res)
     }
     else if (req.url === "/project/create" && req.method === "POST") {
         addProject(req, res)

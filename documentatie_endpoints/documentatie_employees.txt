@@ -110,3 +110,59 @@ format request promotion: /promotion
 
 format response promotion: id: 204 updatat
                            id: 404 angajat inexistent
+
+format request employee/searchbyrole:
+{
+    "organization": "f6171e0c-661d-4629-919e-9a323e633f91",
+    "role": "Administrator"
+}
+response: [] in caz ca nu gaseste in caz ca gaseste: 
+
+[
+    {
+        "id": "bc5982d3-77e4-4a35-b004-4723440f3058",
+        "name": "name",
+        "roles": [
+            "Employee",
+            "Administrator"
+        ],
+        "skills": []
+    }
+]
+
+format request employee/searchbydepartment:
+{
+    "organization": "f6171e0c-661d-4629-919e-9a323e633f91",
+    "department": "Javascript" //aici poti pune "any" si-ti da toate
+
+
+format response: [] in caz ca nu gaseste sau:
+[
+    {
+        "id": "bc5982d3-77e4-4a35-b004-4723440f3058",
+        "name": "name",
+        "roles": [
+            "Employee",
+            "Administrator"
+        ],
+        "skills": []
+    },
+    {
+        "id": "b96011f2-834b-43a9-914d-f0abe6a2e161",
+        "name": "Ciprian",
+        "roles": [
+            "Employee",
+            "Project Manager",
+            "Department Manager"
+        ],
+        "skills": []
+    },
+    {
+        "id": "192f037b-eac0-4952-b68b-eb9a6ba5d987",
+        "name": "Ciprian",
+        "roles": [
+            "Employee"
+        ],
+        "skills": []
+    }
+]
