@@ -25,7 +25,7 @@ async function newOrganizationProject(organization, project) {
         const organizationProjects = (await Database.listOrganizationField(organization, "projects", "projects"))
 
         const newProject = await createProject(project)
-
+        
         organizationProjects.push(newProject)
 
         await Database.replaceOrganizationField(organization, "projects", "projects", organizationProjects)

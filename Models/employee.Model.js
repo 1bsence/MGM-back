@@ -29,6 +29,17 @@ async function searchEmployee(employee) {
     }
     return false
 }
+
+async function searchEmployeeByID(organization, id) {
+    var organizationEmployees = await Database.listOrganizationField(organization, "employees", "employees")
+    for (j = 0; j < organizationEmployees.length; j++) {
+        if (organizationEmployees[j].id === id) {
+            return organizationEmployees[j]
+        }
+    }
+    return false
+}
+
 // searches for an employees email and password throughout every organization container
 //if it finds a match returns the organization id,name and employee object
 //used for logging in, employee object is : {email, password}
@@ -134,7 +145,7 @@ async function searchEmployeesByRole(organization, role) {
     matchingEmployees = []
     for (i = 0; i < employees.length; i++) {
         emps = employees[i]
-        if (emps.roles.find((obj)=> obj === role)) {
+        if (emps.roles.find((obj) => obj === role)) {
             matchingEmployees.push({
                 id: emps.id,
                 name: emps.name,
@@ -189,7 +200,7 @@ async function getAllEmployees(organization) {
             name: emps.name,
             email: emps.email,
             roles: emps.roles,
-            department:emps.department,
+            department: emps.department,
             projects: emps.projects,
             skills: emps.skills
         })
@@ -208,5 +219,6 @@ module.exports = {
     searchEmployeesByRole,
     newEmployeeNotification,
     deleteEmployeeNotification,
-    getAllEmployees
+    getAllEmployees,
+    searchEmployeeByID
 }

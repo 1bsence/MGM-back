@@ -65,6 +65,8 @@ async function listDepartment(organization, id) {
     const departmentlist = await Database.listOrganizationField(organization, "departments", "departments")
     for (i = 0; i < departmentlist.length; i++) {
         if (departmentlist[i].id === id) {
+            managerid = departmentlist[i].manager
+            departmentlist[i].manager ={ id:managerid,name:(await Employee.searchEmployeeByID(organization,managerid)).name}
             return departmentlist[i]
         }
     }
