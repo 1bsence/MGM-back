@@ -133,7 +133,8 @@ async function searchEmployeesByDepartment(organization, department) {
                 id: emps.id,
                 name: emps.name,
                 roles: emps.roles,
-                skills: emps.skills
+                skills: emps.skills,
+                department: emps.department
             })
         }
     }
@@ -150,7 +151,8 @@ async function searchEmployeesByRole(organization, role) {
                 id: emps.id,
                 name: emps.name,
                 roles: emps.roles,
-                skills: emps.skills
+                skills: emps.skills,
+                department:emps.department
             })
         }
     }
@@ -163,7 +165,9 @@ async function newEmployeeNotification(organization, employee, notification) {
     const oldemployees = await Database.listOrganizationField(organization, "employees", "employees")
     for (i = 0; i < oldemployees.length; i++) {
         if (oldemployees[i].id === employee) {
+            if(!notification.id){
             notification.id = randomUUID()
+            }
             oldemployees[i].notifications.push(notification)
             await Database.replaceOrganizationField(organization, "employees", "employees", oldemployees)
             return { id: 204 }
@@ -208,6 +212,26 @@ async function getAllEmployees(organization) {
     return matchingEmployees
 }
 
+async function newSkill(organization,employee,skill){
+    const employees = await Database.listOrganizationField(organization, "employees", "employees")
+    for(i = 0;i < employees.length;i++)
+    {
+        if(employees[i].id === employee)
+        {
+            employee_department = (await searchEmployeeByID(organization,employee)).department
+            department_manager = (await Database.listOrganizationField(organization,"departments","departments")).find((dpt) => dpt.name === employee_department).manager
+            notification = randomUUID()
+            newEmployeeNotification(organization,department_manager,{id: notification,message: "An employee is awaiting validation for a new skill!", parent: skill.id})
+            skill.validated = "false"
+            skill.awaiting = notification
+            employees[i].skills.push(skill) 
+            console.log(employees[i].skills)
+            await Database.replaceOrganizationField(organization,"employees","employees",employees)
+            return {id:204}
+        }
+    }
+}
+
 module.exports = {
     createEmployee,
     searchEmployee,
@@ -220,5 +244,6 @@ module.exports = {
     newEmployeeNotification,
     deleteEmployeeNotification,
     getAllEmployees,
-    searchEmployeeByID
+    searchEmployeeByID,
+    newSkill
 }

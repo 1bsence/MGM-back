@@ -166,3 +166,22 @@ format response: [] in caz ca nu gaseste sau:
         "skills": []
     }
 ]
+
+format request employee/addskill
+{
+    "organization": "f6171e0c-661d-4629-919e-9a323e633f91",
+    "employee": "b96011f2-834b-43a9-914d-f0abe6a2e161",
+    "skill": {
+        "id": "30e52733-3153-4f64-b1aa-c25216bcafc8",
+        "name": "Testing",
+        "category": "Testing",
+        "author": "Testing",
+        "departments": [],
+        "description": "Testing",
+        "level": "Testing",
+        "endorsement": "Testing",
+        "validated": "Testing"
+    }
+}
+
+response: 204

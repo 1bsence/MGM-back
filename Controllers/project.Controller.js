@@ -46,14 +46,14 @@ async function removeProject(req, res) {
 
 async function readProject(req, res) {
     const data = await getPostData(req)
-    result = await Project.listProject(data.organization.id, data.department.id)
+    result = await Project.listProject(data.organization.id, data.project.id)
     if (result) {
         res.writeHead(201, headers)
         res.end(JSON.stringify(result))
     }
     else {
         res.writeHead(404, headers)
-        res.end("Not Found")
+        res.end(JSON.stringify({id: 404}))
     }
 }
 

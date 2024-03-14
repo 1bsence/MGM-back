@@ -1,5 +1,6 @@
 const Database = require("./database.Model.js")
 const Employee = require("./employee.Model.js")
+const Department = require("./department.Model.js")
 const { randomUUID } = require("crypto")
 
 
@@ -78,14 +79,25 @@ async function updateOrganizationProject(organization, project) {
     const organizationProjects = await Database.listOrganizationField(organization, "projects", "projects")
     for (i = 0; i < organizationProjects.length; i++) {
         if (organizationProjects[i].id === project.id) {
-            newEmployees = []
+            var newEmployees = []
             for(j = 0; j < project.employees.length; j++)
             {
-                if(project.employees.status !== "active"){
-                    newEmployees.push( { employee:project.employees[j],status: "proposed"} )
+                if(project.employees[j].status === undefined)
+                {
+                    employee_department = (await Employee.searchEmployeeByID(organization,project.employees[j].employee)).department
+                    department_manager = (await Department.listDepartments(organization)).find((dpt) => dpt.name === employee_department).manager
+                    notification = randomUUID()
+                    Employee.newEmployeeNotification(organization,department_manager,{id: notification,message: "An employee has been proposed for a project!", parent: project.id})
+                    project.employees[j].status = "proposed"
+                    project.employees[j].awaiting = notification
+                    newEmployees.push(project.employees[j])
+                }
+                else{
+                    newEmployees.push( project.employees[j] )
                 }
             }
             project.employees = newEmployees
+            organizationProjects[i] = project
             await Database.replaceOrganizationField(organization,"projects","projects",organizationProjects)
             return project
         }

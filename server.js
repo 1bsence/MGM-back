@@ -1,12 +1,13 @@
 const http = require("http")
 
-const { searchByDepartment,newEmployee, loginEmployee, promoteEmployee,notifyEmployee,notifiedEmployee,listEmployees,searchByRole } = require("./Controllers/employee.Controller.js")
+const { searchByDepartment,newEmployee, loginEmployee, promoteEmployee,
+    notifyEmployee,notifiedEmployee,listEmployees,searchByRole,addEmployeeSkill } = require("./Controllers/employee.Controller.js")
 const { addDepartment,readDepartment,modifyDepartment,removeDepartment, listAllDepartments } = require("./Controllers/department.Controller.js")
 const { addProject,modifyProject,removeProject,readProject,listAllProjects} = require("./Controllers/project.Controller.js")
 const { getcondata,getallconsdata } = require("./Controllers/database.Controller.js")
 const { newOrganization } = require("./Controllers/organization.Controller.js")
 const { addSkill,readSkill,modifySkill,removeSkill} = require("./Controllers/skill.Controller.js")
-
+const {handleProjectNotification} = require("./Controllers/notification.Controller.js")
 const headers = {
     'Access-Control-Allow-Origin': '*', /* @dev First, read about security */
     'Access-Control-Allow-Methods': '*',
@@ -73,6 +74,10 @@ const server = http.createServer((req, res) => {
     else if (req.url === "/employee/searchbyrole" && req.method === "POST") {
         searchByRole(req, res)
     }
+    else if(req.url === "/employee/addskill" && req.method === "POST")
+    {
+        addEmployeeSkill(req,res)
+    }
     else if (req.url === "/project/create" && req.method === "POST") {
         addProject(req, res)
     }
@@ -96,6 +101,9 @@ const server = http.createServer((req, res) => {
     }
     else if (req.url === "/skill/remove" && req.method === "POST") {
         removeSkill(req, res)
+    }
+    else if (req.url === "/notification/project" && req.method === "POST") {
+        handleProjectNotification(req, res)
     }
     else {
         res.writeHead(404, headers)
