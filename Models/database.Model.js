@@ -26,17 +26,9 @@ async function listConIDs() {
     }
     return idlist
 }
-/*
-async function deletecons()
-{
-    const conids = (await listConIDs())
-    for(i = 0; i < conids.length;i++)
-    {
-        await Cosmos_DB.container(conids[i]).delete()
-    }
-}
-deletecons()
-*/
+
+//Cosmos_DB.container("f6171e0c-661d-4629-919e-9a323e633f91").delete()
+
 //returns a list of every item in a container
 //used to see full organization data
 async function readContainerItems(conID) {

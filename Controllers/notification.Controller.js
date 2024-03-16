@@ -26,33 +26,37 @@ const headers = {
 */
 async function handleProjectNotification(req, res) {
     const data = await getPostData(req)
-    project = await Project.listProject(data.organization,data.parent)
-        for (j = 0; j < project.employees.length; j++) {
-            if (project.employees[j].awaiting === data.id) {
-                if (data.response) {
-                    console.log(project.employees[j])
-                    project.employees[j] = {
-                        employee: project.employees[j].employee,
-                        role: project.employees[j].role,
-                        hours: project.employees[j].hours,
-                        status: "active"
-                    }
-                    projects = await Project.listProjects(data.organization)
-                    for(i = 0; i < projects.length;i++)
-                    {
-                        if(projects[i].id = project.id)
-                        {
-                            projects[i] = project
-                        }
-                        await Database.replaceOrganizationField(data.organization,"projects","projects",projects)
-                    }
-                    break
-                }
-            }
+    project = await Project.listProject(data.organization, data.parent)
+    const employees = await Database.listOrganizationField(data.organization,"employees","employees")
+    depmanager = employees.find((obj) => obj.notifications.find((not) => not.id === data.id))
+    depmanager.notifications.splice(depmanager.notifications.findIndex((not) => not.id === data.id),1)
+    if (data.response === "accept") {
+        index = project.employees.findIndex((obj) => obj.awaiting === data.id)
+        newemployee = employees.find((obj) => obj.id === project.employees[index].employee)
+
+        newemployee.projects.push(project.name)
+        Employee.newEmployeeNotification(data.organization,newemployee.id,"You have been assigned to a new project!")
+
+        project.employees[index] = {
+            employee: project.employees[index].employee,
+            role: project.employees[index].role,
+            hours: project.employees[index].hours,
+            status: "active",
+        }
+        projects = await Database.listOrganizationField(data.organization,"projects","projects")
+
+        projects[projects.findIndex((obj) => obj.id === data.parent)] = project
+
+        await Database.replaceOrganizationField(data.organization,"projects","projects",projects)
+        await Database.replaceOrganizationField(data.organization,"employees","employees",employees)
+        res.writeHead(200,headers)
+        res.end("IT WORKS")
     }
-    res.writeHead(200, headers)
-    res.end(JSON.stringify({id:200}))
+    else if (data.response === "reject") {
+
+    }
 }
+
 
 module.exports = {
     handleProjectNotification

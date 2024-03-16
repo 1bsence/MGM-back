@@ -170,10 +170,8 @@ async function newEmployeeNotification(organization, employee, notification) {
             }
             oldemployees[i].notifications.push(notification)
             await Database.replaceOrganizationField(organization, "employees", "employees", oldemployees)
-            return { id: 204 }
         }
     }
-    return { id: 404 }
 }
 
 async function deleteEmployeeNotification(organization, employee, notification) {

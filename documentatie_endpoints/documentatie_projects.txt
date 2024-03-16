@@ -49,6 +49,24 @@ request project/modify:
     }
 }
 
+employee list for project/modify: 
+[
+            {
+                "employee": "c613592d-7aa8-4b80-a3c8-9113f91aeb13",
+                "role": " ",
+                "hours": "8"
+            }
+            pentru adaugare angajat nou
+            {
+                "employee": "c613592d-7aa8-4b80-a3c8-9113f91aeb13",
+                "role": " ",
+                "hours": "8",
+                "status": "removing",
+                "reason": "does not work, lazy cunt"
+            },
+            pentru stergere
+]
+
 response:
 {
     "id": "becd0d1b-b196-47a4-b21a-1fdfb37399a4",

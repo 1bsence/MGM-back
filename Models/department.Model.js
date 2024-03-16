@@ -66,7 +66,12 @@ async function listDepartment(organization, id) {
     for (i = 0; i < departmentlist.length; i++) {
         if (departmentlist[i].id === id) {
             managerid = departmentlist[i].manager
-            departmentlist[i].manager ={ id:managerid,name:(await Employee.searchEmployeeByID(organization,managerid)).name}
+            name = (await Employee.searchEmployeeByID(organization,managerid)).name
+            if(!name)
+            {
+                name = " "
+            }
+            departmentlist[i].manager ={ id:managerid,name:name}
             return departmentlist[i]
         }
     }
