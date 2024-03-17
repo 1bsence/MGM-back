@@ -42,7 +42,8 @@ async function newOrganizationProject(organization, project) {
             await Employee.newEmployeeNotification(organization, administrators[i].id,
                 {
                     parent: project.id,
-                    message: "A new project has been created!"
+                    message: "A new project has been created!",
+                    type: "inform"
                 })
         }
         return {
@@ -95,7 +96,8 @@ async function updateOrganizationProject(organization, project) {
             Employee.newEmployeeNotification(organization, department_manager, {
                 id: notification,
                 message: `${emp_name} has been requested ${current_employee.hours} hours/day for ${project.name} project`,
-                parent: project.id
+                parent: project.id,
+                type: "action"
             })
 
             current_employee.status = "proposed"
@@ -113,7 +115,8 @@ async function updateOrganizationProject(organization, project) {
             Employee.newEmployeeNotification(organization, department_manager, {
                 id: notification,
                 message: `${emp_name} is being removed from  ${project.name} project. Reason: ${current_employee.reason}`,
-                parent: project.id
+                parent: project.id,
+                type: "action"
             })
 
             current_employee.status = "removing"

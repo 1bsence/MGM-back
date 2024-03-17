@@ -34,6 +34,7 @@ async function newOrganizationDepartment(organization, department) {
         {
             await Employee.newEmployeeNotification(organization,administrators[i].id,
                 {
+                    type:"inform",
                     parent: department.id,
                     message:"A new department has been created!"})
         }       
@@ -102,6 +103,7 @@ async function updateOrganizationDepartment(organization, department) {
             {
                 await Employee.newEmployeeNotification(organization,department.employees[j],
                     {
+                        type: "inform",
                         parent: department.id,
                         message:"You have been assigned to a new department!"})
             }

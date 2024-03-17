@@ -14,11 +14,11 @@ format request: /employee/notifications
     ]
 }
 
-format request /notification/project:
+format request /notification:
 
 {
     "organization": "0f96f8a9-43a4-4c22-8723-bbf197425be3",
     "id": "99a1d208-a94b-47a1-b4e0-bc1706777329",
     "parent": "84b7c8e9-831d-4160-bf91-8c5b97f32f07",
-    "response": "accept"
+    "response": "accept" /"reject"/"dissmis"
 }
