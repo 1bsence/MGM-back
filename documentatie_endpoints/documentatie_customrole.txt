@@ -1,0 +1,12 @@
+format request: /customrole
+
+{
+    "organization": "b6c6dcb4-28ca-44b9-acb4-9aecd1f14503",
+    "role": "TESTING",
+    "action": "delete"
+}
+
+action : new,read,delete
+
+role in request e necesar pentru new, delete
+read returneaza toate custom roles
