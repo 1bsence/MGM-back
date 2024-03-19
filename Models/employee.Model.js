@@ -125,7 +125,7 @@ async function updateEmployeeRoles(organization, employee, roles) {
             oldemployees[i].roles = roles
             await Database.replaceOrganizationField(organization, "employees", "employees", oldemployees)
 
-            await newEmployeeNotification(organization, employee, { message: "Your roles have been updated!" })
+            await newEmployeeNotification(organization, employee, { message: "Your roles have been updated!",type:"inform" })
             return { id: 204 }
         }
     }
@@ -229,7 +229,7 @@ async function newSkill(organization,employee,skill){
             employee_department = (await searchEmployeeByID(organization,employee)).department
             department_manager = (await Database.listOrganizationField(organization,"departments","departments")).find((dpt) => dpt.name === employee_department).manager
             notification = randomUUID()
-            newEmployeeNotification(organization,department_manager,{id: notification,message: "An employee is awaiting validation for a new skill!", parent: skill.id})
+            newEmployeeNotification(organization,department_manager,{id: notification,message: "An employee is awaiting validation for a new skill!",type:"action", parent: skill.id})
             skill.validated = "false"
             skill.awaiting = notification
             employees[i].skills.push(skill) 
