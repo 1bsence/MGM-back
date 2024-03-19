@@ -29,9 +29,17 @@ async function deleteCRole(organization,role)
     return {id:204}
 }
 
+async function modifyCRole(organization,role,newrole)
+{
+    custom_roles = await Database.listOrganizationField(organization,"custom_roles","custom_roles")
+    custom_roles[custom_roles.findIndex((obj) => obj === role)] = newrole
+    await Database.replaceOrganizationField(organization,"custom_roles","custom_roles",custom_roles)
+    return {id:204}  
+}
 
 module.exports = {
     newCRole,
     readCRoles,
-    deleteCRole
+    deleteCRole,
+    modifyCRole
 }

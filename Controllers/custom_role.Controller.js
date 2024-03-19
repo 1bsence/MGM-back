@@ -32,6 +32,12 @@ async function handleRoles(req,res)
         res.writeHead(200,headers)
         res.end(JSON.stringify({id: 204}))
     }
+    else if(data.action === "modify")
+    {
+        Custom_Role.modifyCRole(data.organization,data.role,data.newrole)
+        res.writeHead(200,headers)
+        res.end(JSON.stringify({id: 204}))
+    }
 }
 
 module.exports = {

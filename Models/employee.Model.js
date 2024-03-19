@@ -40,6 +40,16 @@ async function searchEmployeeByID(organization, id) {
     return false
 }
 
+async function listNotifications(organization, id) {
+    var organizationEmployees = await Database.listOrganizationField(organization, "employees", "employees")
+    for (j = 0; j < organizationEmployees.length; j++) {
+        if (organizationEmployees[j].id === id) {
+            return organizationEmployees[j].notifications
+        }
+    }
+    return false
+}
+
 // searches for an employees email and password throughout every organization container
 //if it finds a match returns the organization id,name and employee object
 //used for logging in, employee object is : {email, password}
@@ -243,5 +253,6 @@ module.exports = {
     deleteEmployeeNotification,
     getAllEmployees,
     searchEmployeeByID,
-    newSkill
+    newSkill,
+    listNotifications
 }

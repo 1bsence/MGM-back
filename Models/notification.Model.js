@@ -55,6 +55,13 @@ async function rejectProjectNotification(organization, notification) {
     return project
 }
 
+
+async function acceptSkillNotification(organization,notification)
+{
+    employees = await Database.listOrganizationField(organization,"employees","employees")
+    employee = employees[employees.findIndex((obj) => obj.skills.findIndex((skl) => skl.awaiting === notification.id))]
+    //tbc///
+}
 async function readNotification(organization,notification)
 {
     const employees = await Database.listOrganizationField(organization, "employees", "employees")
@@ -67,5 +74,6 @@ async function readNotification(organization,notification)
 module.exports = {
     acceptProjectNotification,
     rejectProjectNotification,
-    readNotification
+    readNotification,
+    acceptSkillNotification
 }

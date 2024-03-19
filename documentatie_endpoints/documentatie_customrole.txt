@@ -10,3 +10,11 @@ action : new,read,delete
 
 role in request e necesar pentru new, delete
 read returneaza toate custom roles
+
+request pentru modify:
+{
+    "organization": id organization
+    "role": 
+    "newrole":
+    "action"
+}

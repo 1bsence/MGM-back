@@ -1,7 +1,7 @@
 const http = require("http")
 
 const { searchByDepartment,newEmployee, loginEmployee, promoteEmployee,
-    notifyEmployee,notifiedEmployee,listEmployees,searchByRole,addEmployeeSkill } = require("./Controllers/employee.Controller.js")
+    notifyEmployee,notifiedEmployee,listEmployees,searchByRole,addEmployeeSkill, readNotifications } = require("./Controllers/employee.Controller.js")
 const { addDepartment,readDepartment,modifyDepartment,removeDepartment, listAllDepartments } = require("./Controllers/department.Controller.js")
 const { addProject,modifyProject,removeProject,readProject,listAllProjects} = require("./Controllers/project.Controller.js")
 const { getcondata,getallconsdata } = require("./Controllers/database.Controller.js")
@@ -110,6 +110,9 @@ const server = http.createServer((req, res) => {
     }
     else if (req.url === "/notification" && req.method === "POST") {
         handleNotification(req, res)
+    }
+    else if (req.url === "/employee/seenotifications" && req.method === "POST") {
+        readNotifications(req, res)
     }
     else {
         res.writeHead(404, headers)

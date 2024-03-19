@@ -99,6 +99,14 @@ async function addEmployeeSkill(req,res)
 
 }
 
+async function readNotifications(req,res)
+{
+    data = await getPostData(req)
+    const result = await Employee.listNotifications(data.organization,data.id)
+    res.writeHead(200, headers)
+    res.end(JSON.stringify(result))
+}
+
 module.exports = {
     loginEmployee,
     newEmployee,
@@ -108,5 +116,6 @@ module.exports = {
     notifiedEmployee,
     listEmployees,
     searchByRole,
-    addEmployeeSkill
+    addEmployeeSkill,
+    readNotifications
 }
