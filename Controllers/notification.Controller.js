@@ -22,7 +22,7 @@ const headers = {
     }
 }
 */
-async function handleProjectNotification(req, res) {
+async function handleNotification(req, res) {
     data = await getPostData(req)
     if(data.response === "accept")
     {
@@ -57,5 +57,5 @@ async function handleProjectNotification(req, res) {
 
 
 module.exports = {
-    handleProjectNotification
+    handleNotification
 }
